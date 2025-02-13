@@ -1,5 +1,3 @@
-require('dotenv').config(); // .env 파일 로드
-console.log(process.env.JWT_SECRET); // "secretkey" 출력
 import 'dotenv/config';
 import express from 'express';
 
