@@ -6,7 +6,7 @@ module.exports = (db) => {
   const router = express.Router();
 
   // 회원가입 라우트
-  router.post("/", async (req, res) => {
+  router.post("/signup", async (req, res) => {
     const { nickname, password } = req.body;
     const id = uuidv4();
     const hashedPassword = await bcrypt.hash(password, 10);
