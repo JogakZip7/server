@@ -20,4 +20,5 @@ module.exports = (db) => {
       res.status(400).json({ message: "잘못된 요청입니다" });
     }
   });
+  return router;
 };

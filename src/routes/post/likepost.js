@@ -13,4 +13,5 @@ module.exports = (db) => {
       res.status(404).json({ message: "존재하지 않습니다" });
     }
   });
+  return router;
 };
