@@ -33,6 +33,27 @@ async function connectDB() {
 (async () => {
   const db = await connectDB(); // DB 연결 완료
 
+  // createpost 라우트 연결 (게시글 등록)
+  const createpostRoutes = require("./routes/post/createpost")(db);
+  app.use("/api/groups/:groupId/posts", createpostRoutes);
+
+  // postslist 라우트 연결 (게시글 목록 조회)
+
+  // updatepost 라우트 연결 (게시글 수정)
+
+  // deletepost 라우트 연결 (게시글 삭제)
+
+  // postdetail 라우트 연결 (게시글 상세 정보 조회)
+
+  // postpermission 라우트 연결 (게시글 조회 권한 확인)
+
+  // likepost 라우트 연결 (게시글 공감하기)
+
+
+
+
+
+
   // signup 라우트 연결
   const signupRoutes = require("./routes/user/signup")(db);
   app.use("/api", signupRoutes);
