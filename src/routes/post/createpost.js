@@ -11,8 +11,7 @@ module.exports = (db) => {
 
     try {
       //groupId를 통해 userId 받아오기
-      const [userIdRow] = await db.execute(
-        `
+      const [userIdRow] = await db.execute(`
             SELECT userId
             FROM GROUP
             WHERE id = ?`,
@@ -21,8 +20,7 @@ module.exports = (db) => {
       const userId = userIdRow[0]?.userId;
 
       //userId를 통해 nickname 받아오기
-      const [nicknameRow] = await db.execute(
-        `
+      const [nicknameRow] = await db.execute(`
             SELECT nickname
             FROM USERS
             WHERE id = ?`,
@@ -31,8 +29,8 @@ module.exports = (db) => {
       const nickname = nicknameRow[0]?.nickname;
 
       //게시글 POST 테이블 등록 (id는 자동 등록)
-      const [result] = await db.execute(
-        `INSERT INTO POST (userId, groupId, title, content, imageUrl, isPublic, location, moment, likeCount, commentCount, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0, NOW()`,
+      const [result] = await db.execute(`
+        INSERT INTO POST (userId, groupId, title, content, imageUrl, isPublic, location, moment, likeCount, commentCount, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0, NOW()`,
         [userId, groupId, title, content, imageUrl, isPublic, location, moment]
       );
       const post = {
