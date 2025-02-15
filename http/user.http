@@ -1,0 +1,48 @@
+# 게시글 등록 (그룹 내)
+POST http://localhost:3000/groups/user1/posts
+Content-Type: application/json
+{
+	"title": "post1",
+	"content": "post1_content",
+	"imageUrl": "post1_imageUrl",
+	"isPublic": true,
+	"location": "post1_location",
+	"moment": "date"
+}
+
+#게시글 목록 조회 (그룹 내)
+###
+GET http://localhost:3000/groups/user1/posts?page=1&pageSize=10&sortBy=latest&keyword=example&isPublic=true&groupId=1&userId=user1
+
+#게시글 수정
+###
+PUT http://localhost:3000/posts/1
+Content-Type: application/json
+{
+	"title": "string",
+	"content": "string",
+	"postPassword": "string",
+	"imageUrl": "string",
+	"location": "string",
+	"moment": "2024-02-21",
+	"isPublic": true
+}
+
+#게시글 삭제
+###
+DELETE http://localhost:3000/posts/post1
+
+#게시글 상세 정보 조회
+###
+GET http://localhost:3000/posts/post1
+
+#게시글 조회 권한 확인
+###
+POST http://localhost:3000/posts/post1/verify-password
+
+
+#게시글 공감하기
+###
+POST http://localhost:3000/posts/post1/like
+
+#게시글 공개 여부 확인, 게시글 스크랩하기기
