@@ -35,19 +35,24 @@ async function connectDB() {
 
   // signup 라우트 연결
   const signupRoutes = require("./routes/user/signup")(db);
-  app.use("/api/signup", signupRoutes);
+  app.use("/api", signupRoutes);
 
   //signin 라우트 연결
   const signinRoutes=require ("./routes/user/signin")(db);
-  app.use("/api/signin",signinRoutes);
+  app.use("/api",signinRoutes);
 
   //signout 라우트 연결
   const signoutRoutes= require ("./routes/user/signout")(db);
-  app.use("/api/signout",signoutRoutes);
+  app.use("/api",signoutRoutes);
 
   //deleteuser 라우트 연결
   const deleteuserRoutes = require("./routes/user/deleteuser")(db);
-  app.use("/api/deleteuser", deleteuserRoutes);
+  app.use("/api", deleteuserRoutes);
+
+  //showmygroup
+  const showGroupsRoutes = require("./routes/user/showgroups")(db);
+  app.use("/api", showGroupsRoutes);
+
 
   // 서버 시작
   app.listen(PORT, () => {
