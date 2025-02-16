@@ -1,6 +1,7 @@
 # 게시글 등록 (그룹 내)
-POST http://localhost:3000/groups/user1/posts
+POST http://localhost:3000/src/groups/group1/posts
 Content-Type: application/json
+
 {
 	"title": "post1",
 	"content": "post1_content",
@@ -12,12 +13,13 @@ Content-Type: application/json
 
 #게시글 목록 조회 (그룹 내)
 ###
-GET http://localhost:3000/groups/user1/posts?page=1&pageSize=10&sortBy=latest&keyword=example&isPublic=true&groupId=1&userId=user1
+GET http://localhost:3000/groups/group1/posts?page=1&pageSize=10&sortBy=latest&keyword=example&isPublic=true&groupId=1&userId=user1
 
 #게시글 수정
 ###
 PUT http://localhost:3000/posts/1
 Content-Type: application/json
+
 {
 	"title": "string",
 	"content": "string",

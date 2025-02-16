@@ -38,7 +38,7 @@ async function connectDB() {
   app.post("/api/groups/:groupId/posts", createpostRoutes);
 
   // postslist 라우트 연결 (게시글 목록 조회)
-  const postslistRoutes = require("./routes/post/postslistpost")(db);
+  const postslistRoutes = require("./routes/post/postslist")(db);
   app.get("/api/groups/:groupId/posts", postslistRoutes);
 
   // updatepost 라우트 연결 (게시글 수정)
