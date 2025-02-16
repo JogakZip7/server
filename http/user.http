@@ -63,14 +63,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 
 }
 
-# #게시글 상세 정보 조회
-# ###
-# GET http://localhost:3000/api/2
-# Content-Type: application/json
+#게시글 상세 정보 조회
+###
+GET http://localhost:3000/api/posts/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk3MzMzNTUsImV4cCI6MTczOTc1MTM1NX0.XP-HLoylKpVxgp0GnXMsV92PMQZEmCLNCfEghlVdnrU
 
-# {
+{
 
-# }
+}
 
 # #게시글 조회 권한 확인
 # ###
@@ -78,11 +79,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 
 
 # #게시글 공감하기
-# ###
-# POST http://localhost:3000/posts/post1/like
+###
+POST http://localhost:3000/api/posts/4/like
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk3MzMzNTUsImV4cCI6MTczOTc1MTM1NX0.XP-HLoylKpVxgp0GnXMsV92PMQZEmCLNCfEghlVdnrU
 
-# #게시글 공개 여부 확인, 게시글 스크랩하기기
+{
 
+}
 
 
 ###
