@@ -1,13 +1,23 @@
 const express = require("express");
+const auth = require("../../../middleware/auth");
 
 module.exports = (db) => {
   const router = express.Router();
-  router.delete("/", async (req, res) => {
+  router.delete("/:postId", auth, async (req, res) => {
     const { postId } = req.params;
 
     try {
+      const userId = req.user.id;
+      
+      //게시글 삭제 권한 확인
+      const [checkRow] = await db.execute(`
+        SELECT userId FROM POST
+        WHERE id = ?`, [postId]
+      );
+      if (checkRow[0].userId !== userId) {
+        throw new Error('권한이 없습니다.');
+      }
 
-      //삭제 권한 확인 필요 (JWT 혹은 닉네임 받음음)
 
       //게시글 삭제 시도
       const [result] = await db.execute(`

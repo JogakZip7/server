@@ -13,10 +13,29 @@ module.exports = (db) => {
       groupId,
     } = req.params;
 
-
+    
     try {
       
       const userId = req.user.id;
+
+      //PARTICIPATE 테이블로 확인
+      const [authRow] = await db.execute(`
+        SELECT * FROM PARTICIPATE
+        WHERE userId = ? AND groupId = ?
+        `, [userId, groupId]
+      )
+      if(!authRow || authRow.length !== 1){
+        throw new Error();
+      }
+
+
+
+
+
+
+
+
+
       //총 페이지 수 및 총 게시글 수 카운트
       const [countPost] = await db.execute(
         `

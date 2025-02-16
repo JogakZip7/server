@@ -52,44 +52,16 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 }
 
 
-# ###
-# DELETE http://localhost:3000/api/deleteuser
-# Content-Type: application/json
+#게시글 삭제
+###
+DELETE http://localhost:3000/api/posts/5
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk3MzMzNTUsImV4cCI6MTczOTc1MTM1NX0.XP-HLoylKpVxgp0GnXMsV92PMQZEmCLNCfEghlVdnrU
 
-# {
-
-# }
-
-
+{
 
 
-
-
-
-
-
-
-
-
-
-# #게시글 수정
-# ###
-# PUT http://localhost:3000/posts/1
-# Content-Type: application/json
-
-# {
-# 	"title": "string",
-# 	"content": "string",
-# 	"postPassword": "string",
-# 	"imageUrl": "string",
-# 	"location": "string",
-# 	"moment": "2024-02-21",
-# 	"isPublic": true
-# }
-
-# #게시글 삭제
-# ###
-# DELETE http://localhost:3000/posts/post1
+}
 
 # #게시글 상세 정보 조회
 # ###

@@ -21,25 +21,17 @@ module.exports = (db) => {
       const userId = req.user.id;
       const nickname = req.user.nickname;
 
-      //게시글이 소속되어 있는 그룹 받아옴
-      const [groupIdRow] = await db.execute(`
-        SELECT groupId FROM POST
-        WHERE id = ?        
-        `, [postId]
-      )
-      const groupId = groupIdRow[0].groupId;
-
-      //PARTICIPATE 테이블로 확인
-      const [authRow] = await db.execute(`
-        SELECT * FROM PARTICIPATE
-        WHERE userId = ? AND groupId = ?
-        `, [userId, groupId]
-      )
-      if(!authRow || authRow.length !== 1){
-        throw new Error();
+      //게시글 작성자인지 확인
+      const [checkRow] = await db.execute(`
+        SELECT userId FROM POST
+        WHERE id = ?`, [postId]
+      );
+      if (checkRow[0].userId !== userId) {
+        throw new Error('권한이 없습니다.');
       }
       
-      //POST 테이블 업데이트트
+      
+      //POST 테이블 업데이트
       const [result] = await db.execute(`
          UPDATE POST
          SET

@@ -47,7 +47,7 @@ async function connectDB() {
 
   // deletepost 라우트 연결 (게시글 삭제)
   const deletepostRoutes = require("./routes/post/deletepost")(db);
-  app.use("/api/posts/:postId",deletepostRoutes);  
+  app.use("/api/posts",deletepostRoutes);  
 
   // postdetail 라우트 연결 (게시글 상세 정보 조회)
     const postdetailRoutes = require("./routes/post/postdetail")(db);
