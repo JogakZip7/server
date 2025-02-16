@@ -49,9 +49,13 @@ async function connectDB() {
   const deleteuserRoutes = require("./routes/user/deleteuser")(db);
   app.use("/api", deleteuserRoutes);
 
-  //showmygroup
-  const showGroupsRoutes = require("./routes/user/showgroups")(db);
+  //mygroups
+  const showGroupsRoutes = require("./routes/user/mygroups")(db);
   app.use("/api", showGroupsRoutes);
+
+  const myScrapsRoutes = require("./routes/user/myscraps")(db);
+  app.use("/api", myScrapsRoutes);
+
 
 
   // 서버 시작
