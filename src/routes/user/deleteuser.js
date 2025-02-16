@@ -5,7 +5,7 @@ module.exports = (db) => {
   const router = express.Router();
 
   // 회원탈퇴 라우트
-  router.delete("/", async (req, res) => {
+  router.delete("/deleteuser", async (req, res) => {
     const token = req.headers["authorization"]; // Authorization 헤더에서 JWT 토큰 가져오기
 
     if (!token) {

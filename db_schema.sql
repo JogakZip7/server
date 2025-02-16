@@ -15,7 +15,9 @@ CREATE TABLE `GROUP` (
   imageUrl VARCHAR(255),
   introduction TEXT,
   postCount INT,
+  createdAt DATETIME,
   memberCount INT
+  
 );
 
 -- POST 테이블
