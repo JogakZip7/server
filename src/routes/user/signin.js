@@ -6,7 +6,8 @@ module.exports = (db) => {
   const router = express.Router();
 
   // 로그인 라우트
-  router.post("/", async (req, res) => {
+  router.post("/signin", async (req, res) => {
+    console.log("Login request received");
     const { nickname, password } = req.body;
 
     try {
@@ -27,6 +28,8 @@ module.exports = (db) => {
       const token = jwt.sign({ id: user.id, nickname: user.nickname }, process.env.JWT_SECRET, {
         expiresIn: "5h",  //토큰 만료 시간
       });
+
+      
 
       res.status(200).json({ message: "Login successful", token });
     } catch (err) {
