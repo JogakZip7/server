@@ -2,7 +2,7 @@ const express = require("express");
 
 module.exports = (db) => {
   const router = express.Router();
-  router.get("/groups/:groupId/posts", async (req, res) => {
+  router.get("/", async (req, res) => {
     const {
       page = 1,
       pageSize = 12,

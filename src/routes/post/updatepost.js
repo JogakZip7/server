@@ -4,7 +4,7 @@ module.exports = (db) => {
   const router = express.Router();
 
 
-  router.put("/posts/:postId", async (req, res) => {
+  router.put("/", async (req, res) => {
     const {
       title,
       content,

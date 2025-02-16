@@ -2,7 +2,7 @@ const express = require("express");
 
 module.exports = (db) => {
   const router = express.Router();
-  router.delete("/posts/:postId", async (req, res) => {
+  router.delete("/", async (req, res) => {
     const { postId } = req.params;
 
     try {
