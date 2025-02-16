@@ -1,84 +1,56 @@
 const express = require("express");
 const auth = require("../../../middleware/auth");
-  // JWT 인증 미들웨어
 
 module.exports = (db) => {
   const router = express.Router();
 
   router.get("/myscraps", auth, async (req, res) => {
-    const { page = 1, pageSize = 10, sortBy = "latest", keyword = "", isPublic, groupId } = req.query;
-    const offset = (page - 1) * pageSize;
-    let orderByClause = "P.createdAt DESC"; // 기본 정렬은 최신순
+    const { page = 1, pageSize = 10, sortBy = "latest" } = req.query;
+    const offset = Number(page - 1) * Number(pageSize);  // 숫자 변환 보장
+    let orderByClause = "P.createdAt DESC"; // 기본 정렬: 최신순
 
-    // 정렬 조건 설정
-    switch (sortBy) {
-      case "mostCommented":
-        orderByClause = "P.commentCount DESC";
-        break;
-      case "mostLiked":
-        orderByClause = "P.likeCount DESC";
-        break;
-    }
+    if (sortBy === "mostCommented") orderByClause = "P.commentCount DESC";
+    if (sortBy === "mostLiked") orderByClause = "P.likeCount DESC";
+
+    console.log("Page:", page, "PageSize:", pageSize, "Offset:", offset); // 확인 로그
 
     try {
-      // 사용자 스크랩한 게시물 조회 쿼리
       const [posts] = await db.execute(
         `
-        SELECT P.id, U.nickname, P.title, P.imageUrl, P.location, P.moment, P.isPublic,
-               P.likeCount, P.commentCount, P.createdAt
+        SELECT P.id, U.nickname, P.title, P.imageUrl, P.location, P.moment, P.isPublic, 
+               P.likeCount, P.commentCount
         FROM SCRAP S
         JOIN POST P ON S.postId = P.id
         JOIN USER U ON P.userId = U.id
         WHERE S.userId = ?
-          AND (P.title LIKE ? OR P.content LIKE ?)
-          ${groupId ? "AND P.groupId = ?" : ""}
-          ${isPublic !== undefined ? "AND P.isPublic = ?" : ""}
         ORDER BY ${orderByClause}
-        LIMIT ? OFFSET ?
         `,
-        [
-          req.user.id,
-          `%${keyword}%`,
-          `%${keyword}%`,
-          ...(groupId ? [groupId] : []),
-          ...(isPublic !== undefined ? [isPublic] : []),
-          parseInt(pageSize),
-          parseInt(offset),
-        ]
+        [req.user.id, parseInt(pageSize), parseInt(offset)]
       );
 
-      // 전체 게시물 수 조회
-      const [countResult] = await db.execute(
-        `
-        SELECT COUNT(*) AS totalItemCount
-        FROM SCRAP S
-        JOIN POST P ON S.postId = P.id
-        WHERE S.userId = ?
-          AND (P.title LIKE ? OR P.content LIKE ?)
-          ${groupId ? "AND P.groupId = ?" : ""}
-          ${isPublic !== undefined ? "AND P.isPublic = ?" : ""}
-        `,
-        [
-          req.user.id,
-          `%${keyword}%`,
-          `%${keyword}%`,
-          ...(groupId ? [groupId] : []),
-          ...(isPublic !== undefined ? [isPublic] : []),
-        ]
-      );
-
-      const totalItemCount = countResult[0].totalItemCount;
-      const totalPages = Math.ceil(totalItemCount / pageSize);
+      if (posts.length === 0) {
+        return res.status(200).json({
+          message: "스크랩한 게시글이 없습니다.",
+          data: [],
+        });
+      }
 
       res.status(200).json({
-        currentPage: parseInt(page),
-        totalPages,
-        totalItemCount,
-        data: posts,
+        data: posts.map(post => ({
+          id: post.id,
+          nickname: post.nickname,
+          title: post.title,
+          imageUrl: post.imageUrl,
+          location: post.location,
+          moment: post.moment,
+          isPublic: post.isPublic,
+          likeCount: post.likeCount,
+          commentCount: post.commentCount,
+        })),
       });
     } catch (err) {
-      console.error(err);
-      res.status(500).json({ message: "Error retrieving scraped posts" });
+      console.error("SQL Error:", err);
+      res.status(500).json({ message: "서버 오류가 발생했습니다" });
     }
   });
 
