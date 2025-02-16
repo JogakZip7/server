@@ -57,12 +57,24 @@ async function connectDB() {
   const myscrapsRoutes = require("./routes/user/myscraps")(db);
   app.use("/api", myscrapsRoutes);
 
+  // createGroup 라우트 연결
+  const createGroup = require("./routes/group/createGroup")(db);
+  app.use("/api/groups", createGroup);
 
+  // modifyGroup 라우트 연결
+  const modifyGroup = require("./routes/group/modifyGroup")(db);
+  app.use("/api/groups", modifyGroup);
+
+  // deleteGroup 라우트 연결
+  const deleteGroup = require("./routes/group/deleteGroup")(db);
+  app.use("/api/groups", deleteGroup);
+
+  // detailGroup 라우트 연결
+  const detailGroup = require("./routes/group/detailGroup")(db);
+  app.use("/api/groups", detailGroup);
 
   // 서버 시작
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
 })();
-
-
