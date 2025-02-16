@@ -80,12 +80,13 @@ async function connectDB() {
   const deleteuserRoutes = require("./routes/user/deleteuser")(db);
   app.use("/api", deleteuserRoutes);
 
-  //mygroups
-  const showGroupsRoutes = require("./routes/user/mygroups")(db);
-  app.use("/api", showGroupsRoutes);
+  //mygroups 라우트 연결
+  const mygroupsRoutes = require("./routes/user/mygroups")(db);
+  app.use("/api", mygroupsRoutes);
 
-  const myScrapsRoutes = require("./routes/user/myscraps")(db);
-  app.use("/api", myScrapsRoutes);
+  //myscraps 라우트 연결
+  const myscrapsRoutes = require("./routes/user/myscraps")(db);
+  app.use("/api", myscrapsRoutes);
 
   // createGroup 라우트 연결
   const createGroup = require("./routes/group/createGroup")(db);
