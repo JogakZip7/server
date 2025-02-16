@@ -1,8 +1,9 @@
 const express = require("express");
+const auth = require("../../../middleware/auth");
 
 module.exports = (db) => {
   const router = express.Router();
-  router.get("/", async (req, res) => {
+  router.get("/:groupId/posts", auth, async (req, res) => {
     const {
       page = 1,
       pageSize = 12,
@@ -10,14 +11,12 @@ module.exports = (db) => {
       keyword,
       isPublic = true,
       groupId,
-      userId,
     } = req.params;
 
-    //URL로 page와 pageSize가 문자열로 넘어왔을 경우.
-    page = Number(page);
-    pageSize = Number(pageSize);
 
     try {
+      
+      const userId = req.user.id;
       //총 페이지 수 및 총 게시글 수 카운트
       const [countPost] = await db.execute(
         `
@@ -86,7 +85,7 @@ module.exports = (db) => {
 
       res.status(200).json(response);
     } catch (err) {
-      res.status(400).json({ message: "잘못된 요청입니다" });
+      res.status(400).json({ message: err || "잘못된 요청입니다" });
     }
   });
   return router;
