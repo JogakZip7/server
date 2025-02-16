@@ -5,6 +5,7 @@ module.exports = (db) => {
 
   // 게시글 등록 라우트 (POST 테이블 생성)
   router.post("/groups/:groupId/posts", async (req, res) => {
+    console.log("들어옴");
     const { groupId } = req.params;
 
     const { title, content, imageUrl, isPublic, location, moment } = req.body;
@@ -33,6 +34,8 @@ module.exports = (db) => {
         INSERT INTO POST (userId, groupId, title, content, imageUrl, isPublic, location, moment, likeCount, commentCount, createdAt) VALUES (?, ?, ?, ?, ?, ?, ?, ?, 0, 0, NOW()`,
         [userId, groupId, title, content, imageUrl, isPublic, location, moment]
       );
+
+      
       const post = {
         id: result.insertId,
         groupId,
