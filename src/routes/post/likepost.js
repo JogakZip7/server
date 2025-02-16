@@ -2,7 +2,7 @@ const express = require("express");
 
 module.exports = (db) => {
   const router = express.Router();
-  router.post("/posts/:postId/like", async (req, res) => {
+  router.post("/", async (req, res) => {
     const { postId, Id } = req.params;
 
     try {

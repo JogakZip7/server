@@ -2,8 +2,13 @@ const express = require("express");
 
 module.exports = (db) => {
   const router = express.Router();
-  router.get("/posts/:postId", async (req, res) => {
+
+
+
+  router.get("/", async (req, res) => {
     const { postId } = req.params;
+    
+    
 
     try {
       //postId를 통해 userId 받아오기
@@ -50,6 +55,8 @@ module.exports = (db) => {
     } catch (err) {
       res.status(400).json({ message: "잘못된 요청입니다" });
     }
+  
   });
+
   return router;
 };

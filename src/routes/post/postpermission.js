@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 module.exports = (db) => {
   const router = express.Router();
-  router.post("/posts/:postId/verify-password", async (req, res) => {
+  router.post("/", async (req, res) => {
     const { postId } = req.params;
     const token = req.headers.authorization?.split(' ')[1];
 
