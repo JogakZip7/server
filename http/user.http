@@ -1,5 +1,5 @@
 # 게시글 등록 (그룹 내)
-POST http://localhost:3000/src/groups/group1/posts
+POST http://localhost:3000/groups/group1/posts
 Content-Type: application/json
 
 {

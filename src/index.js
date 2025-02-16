@@ -33,33 +33,33 @@ async function connectDB() {
 (async () => {
   const db = await connectDB(); // DB 연결 완료
 
-  // createpost 라우트 연결 (게시글 등록)
-  const createpostRoutes = require("./routes/post/createpost")(db);
-  app.post("/api/groups/:groupId/posts", createpostRoutes);
+  // // createpost 라우트 연결 (게시글 등록)
+  // const createpostRoutes = require("./routes/post/createpost")(db);
+  // app.post("/api/groups/:groupId/posts", createpostRoutes);
 
-  // postslist 라우트 연결 (게시글 목록 조회)
-  const postslistRoutes = require("./routes/post/postslist")(db);
-  app.get("/api/groups/:groupId/posts", postslistRoutes);
+  // // postslist 라우트 연결 (게시글 목록 조회)
+  // const postslistRoutes = require("./routes/post/postslist")(db);
+  // app.get("/api/groups/:groupId/posts", postslistRoutes);
 
-  // updatepost 라우트 연결 (게시글 수정)
-  const updatepostRoutes = require("./routes/post/updatepost")(db);
-  app.put("/api/posts/:postId",updatepostRoutes);
+  // // updatepost 라우트 연결 (게시글 수정)
+  // const updatepostRoutes = require("./routes/post/updatepost")(db);
+  // app.put("/api/posts/:postId",updatepostRoutes);
 
-  // deletepost 라우트 연결 (게시글 삭제)
-  const deletepostRoutes = require("./routes/post/deletepost")(db);
-  app.delete("/api/posts/:postId",deletepostRoutes);  
+  // // deletepost 라우트 연결 (게시글 삭제)
+  // const deletepostRoutes = require("./routes/post/deletepost")(db);
+  // app.delete("/api/posts/:postId",deletepostRoutes);  
 
-  // postdetail 라우트 연결 (게시글 상세 정보 조회)
-  const postdetailRoutes = require("./routes/post/postdetail")(db);
-  app.get("/api/posts/:postId",postdetailRoutes);
+  // // postdetail 라우트 연결 (게시글 상세 정보 조회)
+  // const postdetailRoutes = require("./routes/post/postdetail")(db);
+  // app.get("/api/posts/:postId",postdetailRoutes);
 
-  // postpermission 라우트 연결 (게시글 조회 권한 확인)
-  const postpermissionRoutes = require("./routes/post/postpermission")(db);
-  app.post("/api/posts/:postId/verify-password", postpermissionRoutes);
+  // // postpermission 라우트 연결 (게시글 조회 권한 확인)
+  // const postpermissionRoutes = require("./routes/post/postpermission")(db);
+  // app.post("/api/posts/:postId/verify-password", postpermissionRoutes);
   
-  // likepost 라우트 연결 (게시글 공감하기)
-  const likepostRoutes = require("./routes/post/likepost")(db);
-  app.post("/api/posts/:postId/like", likepostRoutes);
+  // // likepost 라우트 연결 (게시글 공감하기)
+  // const likepostRoutes = require("./routes/post/likepost")(db);
+  // app.post("/api/posts/:postId/like", likepostRoutes);
 
 
 
