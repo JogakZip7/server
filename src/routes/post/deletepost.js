@@ -6,6 +6,10 @@ module.exports = (db) => {
     const { postId } = req.params;
 
     try {
+
+      //삭제 권한 확인 필요 (JWT 혹은 닉네임 받음음)
+
+      //게시글 삭제 시도
       const [result] = await db.execute(`
         DELETE FROM POST
         WHERE id = ?`, [postId]
