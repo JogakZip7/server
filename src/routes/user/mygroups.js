@@ -1,42 +1,51 @@
 const express = require("express");
-const auth = require("../../../middleware/auth");  //auth 미들웨어 사용
-
+const auth = require("../../../middleware/auth");
 
 module.exports = (db) => {
   const router = express.Router();
 
-  router.get("/mygroups", auth, async (req, res) => {  // auth 미들웨어 추가
-    const { page = 1, pageSize = 10, sortBy = "latest", keyword = "" } = req.query;
-    const offset = (page - 1) * pageSize;
-
+  router.get("/mygroups", auth, async (req, res) => {
     try {
+      const userId = req.user.id;
+
+      // 내가 참여한 그룹 조회
       const [groups] = await db.execute(
-        `SELECT G.id, G.name, G.imageUrl, G.introduction, G.postCount, G.createdAt
-         FROM PARTICIPATE P
-         JOIN \`GROUP\` G ON P.groupId = G.id
-         WHERE P.userId = ? AND G.name LIKE ?
-         ORDER BY G.createdAt DESC
-         LIMIT ? OFFSET ?`,
-        [req.user.id, `%${keyword}%`, parseInt(pageSize), parseInt(offset)]
+        `
+        SELECT G.id, G.name, G.imageUrl, G.introduction, G.postCount, 
+               (SELECT COUNT(*) FROM PARTICIPATE P WHERE P.groupId = G.id) AS badgeCount
+        FROM PARTICIPATE PA
+        JOIN \`GROUP\` G ON PA.groupId = G.id
+        WHERE PA.userId = ?
+        `,
+        [userId]
       );
 
-      const [countResult] = await db.execute(
-        `SELECT COUNT(*) AS totalItemCount
-         FROM PARTICIPATE P
-         JOIN \`GROUP\` G ON P.groupId = G.id
-         WHERE P.userId = ? AND G.name LIKE ?`,
-        [req.user.id, `%${keyword}%`]
-      );
+      if (groups.length === 0) {
+        return res.status(200).json({
+          message: "그룹이 없습니다.",
+          currentPage: 1,
+          totalPages: 0,
+          totalItemCount: 0,
+          data: [],
+        });
+      }
 
       res.status(200).json({
-        currentPage: parseInt(page),
-        totalPages: Math.ceil(countResult[0].totalItemCount / pageSize),
-        totalItemCount: countResult[0].totalItemCount,
-        data: groups,
+        currentPage: 1,
+        totalPages: 1,
+        totalItemCount: groups.length,
+        data: groups.map(group => ({
+          id: group.id,
+          name: group.name,
+          imageUrl: group.imageUrl,
+          badgeCount: group.badgeCount,
+          postCount: group.postCount,
+          introduction: group.introduction,
+        })),
       });
     } catch (err) {
-      console.error(err);
-      res.status(500).send("Error retrieving groups");
+      console.error("SQL Error:", err);
+      res.status(500).json({ message: "서버 오류가 발생했습니다" });
     }
   });
 
