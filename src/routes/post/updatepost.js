@@ -1,10 +1,10 @@
 const express = require("express");
+const auth = require("../../../middleware/auth");
 
 module.exports = (db) => {
   const router = express.Router();
 
-
-  router.put("/", async (req, res) => {
+  router.put("/:postId", auth, async (req, res) => {
     const {
       title,
       content,
@@ -18,8 +18,26 @@ module.exports = (db) => {
     const { postId } = req.params;
 
     try {
-      //postPassword, 닉네임, JWT 토큰 중 하나로 수정 권한 확인.
-      // if() return res.status(403).json({ message: "비밀번호가 틀렸습니다"});
+      const userId = req.user.id;
+      const nickname = req.user.nickname;
+
+      //게시글이 소속되어 있는 그룹 받아옴
+      const [groupIdRow] = await db.execute(`
+        SELECT groupId FROM POST
+        WHERE id = ?        
+        `, [postId]
+      )
+      const groupId = groupIdRow[0].groupId;
+
+      //PARTICIPATE 테이블로 확인
+      const [authRow] = await db.execute(`
+        SELECT * FROM PARTICIPATE
+        WHERE userId = ? AND groupId = ?
+        `, [userId, groupId]
+      )
+      if(!authRow || authRow.length !== 1){
+        throw new Error();
+      }
       
       //POST 테이블 업데이트트
       const [result] = await db.execute(`
@@ -39,20 +57,11 @@ module.exports = (db) => {
        }
 
        const [responseRow] = await db.execute(`
-         SELECT id, groupId, userId, title, content, imageUrl, location, moment, isPublic, likeCount, commentCount, createdAt
+         SELECT id, groupId, title, content, imageUrl, location, moment, isPublic, likeCount, commentCount, createdAt
          FROM POST
          WHERE id = ?`,
          [postId]
       );
-
-      //userId를 통해 nickname 받아오기
-      const [nicknameRow] = await db.execute(`
-            SELECT nickname
-            FROM USERS
-            WHERE id = ?`,
-        [responseRow[0].userId]
-      );
-      const nickname = nicknameRow[0].nickname;
 
 
       const response = {
@@ -73,7 +82,7 @@ module.exports = (db) => {
       res.status(200).json(response);
 
     } catch (err) {
-      res.status(400).json({ message: "잘못된 요청입니다" });
+      res.status(400).json({ message: err || "잘못된 요청입니다" });
     }
   });
   return router;
