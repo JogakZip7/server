@@ -1,33 +1,34 @@
 const express = require("express");
+const auth = require("../../../middleware/auth");
 
 module.exports = (db) => {
   const router = express.Router();
 
-
-
-  router.get("/", async (req, res) => {
+  router.get("/:postId", auth, async (req, res) => {
     const { postId } = req.params;
     
-    
-
     try {
-      //postId를 통해 userId 받아오기
-      const [userIdRow] = await db.execute(`
-            SELECT userId
-            FROM POST
-            WHERE id = ?`,
-        [postId]
-      );
-      const userId = userIdRow[0]?.userId;
 
-      //userId를 통해 nickname 받아오기
-      const [nicknameRow] = await db.execute(`
-            SELECT nickname
-            FROM USERS
-            WHERE id = ?`,
-        [userId]
+      const userId = req.user.id;
+      const nickname = req.user.nickname;
+
+      //게시글 그룹아이디 가져오기
+      const [groupRow] = await db.execute(`
+        SELECT groupId FROM POST
+        WHERE id = ?`, [postId]
       );
-      const nickname = nicknameRow[0]?.nickname;
+      const groupId = groupRow[0].groupId;
+
+      //상세정보 조회 권한 확인
+      const [authRow] = await db.execute(`
+        SELECT * FROM PARTICIPATE
+        WHERE userId = ? AND groupId = ?
+        `, [userId, groupId]
+      )
+      if(!authRow || authRow.length !== 1){
+        return res.status(400).json({ message: err || "권한이 없습니다" });
+      }
+
 
       //요청받은 postId에 맞는 튜플 가져오기
       const [postRow] = await db.execute(`
@@ -53,7 +54,7 @@ module.exports = (db) => {
       };
       res.status(200).json(post);
     } catch (err) {
-      res.status(400).json({ message: "잘못된 요청입니다" });
+      res.status(400).json({ message: err || "잘못된 요청입니다" });
     }
   
   });
