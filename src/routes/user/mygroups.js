@@ -1,10 +1,11 @@
 const express = require("express");
-const auth = require("../middlewares/auth");  // auth 미들웨어 사용
+const auth = require("../../../middleware/auth");  //auth 미들웨어 사용
+
 
 module.exports = (db) => {
   const router = express.Router();
 
-  router.get("/", auth, async (req, res) => {  // auth 미들웨어 추가
+  router.get("/mygroups", auth, async (req, res) => {  // auth 미들웨어 추가
     const { page = 1, pageSize = 10, sortBy = "latest", keyword = "" } = req.query;
     const offset = (page - 1) * pageSize;
 

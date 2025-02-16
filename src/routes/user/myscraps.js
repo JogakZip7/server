@@ -1,5 +1,6 @@
 const express = require("express");
-const auth = require("../../middlewares/auth");  // JWT 인증 미들웨어
+const auth = require("../../../middleware/auth");
+  // JWT 인증 미들웨어
 
 module.exports = (db) => {
   const router = express.Router();
