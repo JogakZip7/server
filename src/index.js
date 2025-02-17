@@ -29,7 +29,7 @@ async function connectDB() {
   }
 }
 
-//db사용
+// db사용
 (async () => {
   const db = await connectDB(); // DB 연결 완료
 
@@ -64,23 +64,23 @@ async function connectDB() {
   const signupRoutes = require("./routes/user/signup")(db);
   app.use("/api", signupRoutes);
 
-  //signin 라우트 연결
+  // signin 라우트 연결
   const signinRoutes=require ("./routes/user/signin")(db);
   app.use("/api",signinRoutes);
 
-  //signout 라우트 연결
+  // signout 라우트 연결
   const signoutRoutes= require ("./routes/user/signout")(db);
   app.use("/api",signoutRoutes);
 
-  //deleteuser 라우트 연결
+  // deleteuser 라우트 연결
   const deleteuserRoutes = require("./routes/user/deleteuser")(db);
   app.use("/api", deleteuserRoutes);
 
-  //mygroups 라우트 연결
+  // mygroups 라우트 연결
   const mygroupsRoutes = require("./routes/user/mygroups")(db);
   app.use("/api", mygroupsRoutes);
 
-  //myscraps 라우트 연결
+  // myscraps 라우트 연결
   const myscrapsRoutes = require("./routes/user/myscraps")(db);
   app.use("/api", myscrapsRoutes);
 
@@ -99,6 +99,22 @@ async function connectDB() {
   // detailGroup 라우트 연결
   const detailGroup = require("./routes/group/detailGroup")(db);
   app.use("/api/groups", detailGroup);
+
+  // createComment 라우트 연결
+  const createComment = require("./routes/comment/createComment")(db);
+  app.use("/api/posts", createComment);
+
+  // readComment 라우트 연결
+  const readComment = require("./routes/comment/readComment")(db);
+  app.use("/api/posts", readComment);
+
+  // updateCommnet 라우트 연결
+  const updateCommnet = require("./routes/comment/updateCommnet")(db);
+  app.use("/api/comments", updateCommnet);
+
+  // deleteComment 라우트 연결
+  const deleteComment = require("./routes/comment/deleteComment")(db);
+  app.use("/api/comments", deleteComment);
 
   // 서버 시작
   app.listen(PORT, () => {
