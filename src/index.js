@@ -5,7 +5,6 @@ const bodyParser = require("body-parser");
 const mysql = require("mysql2/promise");
 require("dotenv").config();  // .env 파일에서 환경 변수 로드
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -29,58 +28,31 @@ async function connectDB() {
   }
 }
 
-//db사용
+// db사용
 (async () => {
   const db = await connectDB(); // DB 연결 완료
-
-  // // createpost 라우트 연결 (게시글 등록)
-  const createpostRoutes = require("./routes/post/createpost")(db);
-  app.use("/api/groups", createpostRoutes);
-
-  // postslist 라우트 연결 (게시글 목록 조회)
-  const postslistRoutes = require("./routes/post/postslist")(db);
-  app.use("/api/groups", postslistRoutes);
-
-  // updatepost 라우트 연결 (게시글 수정)
-  const updatepostRoutes = require("./routes/post/updatepost")(db);
-  app.use("/api/posts",updatepostRoutes);
-
-  // deletepost 라우트 연결 (게시글 삭제)
-  const deletepostRoutes = require("./routes/post/deletepost")(db);
-  app.use("/api/posts",deletepostRoutes);  
-
-  // postdetail 라우트 연결 (게시글 상세 정보 조회)
-    const postdetailRoutes = require("./routes/post/postdetail")(db);
-    app.use("/api/posts", postdetailRoutes);
-  
-  // likepost 라우트 연결 (게시글 공감하기)
-  const likepostRoutes = require("./routes/post/likepost")(db);
-  app.use("/api/posts", likepostRoutes);
-
-
-
 
   // signup 라우트 연결
   const signupRoutes = require("./routes/user/signup")(db);
   app.use("/api", signupRoutes);
 
-  //signin 라우트 연결
+  // signin 라우트 연결
   const signinRoutes=require ("./routes/user/signin")(db);
   app.use("/api",signinRoutes);
 
-  //signout 라우트 연결
+  // signout 라우트 연결
   const signoutRoutes= require ("./routes/user/signout")(db);
   app.use("/api",signoutRoutes);
 
-  //deleteuser 라우트 연결
+  // deleteuser 라우트 연결
   const deleteuserRoutes = require("./routes/user/deleteuser")(db);
   app.use("/api", deleteuserRoutes);
 
-  //mygroups 라우트 연결
+  // mygroups 라우트 연결
   const mygroupsRoutes = require("./routes/user/mygroups")(db);
   app.use("/api", mygroupsRoutes);
 
-  //myscraps 라우트 연결
+  // myscraps 라우트 연결
   const myscrapsRoutes = require("./routes/user/myscraps")(db);
   app.use("/api", myscrapsRoutes);
 
@@ -99,6 +71,46 @@ async function connectDB() {
   // detailGroup 라우트 연결
   const detailGroup = require("./routes/group/detailGroup")(db);
   app.use("/api/groups", detailGroup);
+
+  // createpost 라우트 연결 (게시글 등록)
+  const createpostRoutes = require("./routes/post/createpost")(db);
+  app.use("/api/groups", createpostRoutes);
+
+  // postslist 라우트 연결 (게시글 목록 조회)
+  const postslistRoutes = require("./routes/post/postslist")(db);
+  app.use("/api/groups", postslistRoutes);
+
+  // updatepost 라우트 연결 (게시글 수정)
+  const updatepostRoutes = require("./routes/post/updatepost")(db);
+  app.use("/api/posts",updatepostRoutes);
+
+  // deletepost 라우트 연결 (게시글 삭제)
+  const deletepostRoutes = require("./routes/post/deletepost")(db);
+  app.use("/api/posts",deletepostRoutes);  
+
+  // postdetail 라우트 연결 (게시글 상세 정보 조회)
+  const postdetailRoutes = require("./routes/post/postdetail")(db);
+  app.use("/api/posts", postdetailRoutes);
+  
+  // likepost 라우트 연결 (게시글 공감하기)
+  const likepostRoutes = require("./routes/post/likepost")(db);
+  app.use("/api/posts", likepostRoutes);
+
+  // createComment 라우트 연결
+  const createComment = require("./routes/comment/createComment")(db);
+  app.use("/api/posts", createComment);
+
+  // readComment 라우트 연결
+  const readComment = require("./routes/comment/readComment")(db);
+  app.use("/api/posts", readComment);
+
+  // updateCommnet 라우트 연결
+  const updateCommnet = require("./routes/comment/updateCommnet")(db);
+  app.use("/api/comments", updateCommnet);
+
+  // deleteComment 라우트 연결
+  const deleteComment = require("./routes/comment/deleteComment")(db);
+  app.use("/api/comments", deleteComment);
 
   // 서버 시작
   app.listen(PORT, () => {
