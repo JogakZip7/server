@@ -15,7 +15,16 @@ module.exports = (db) => {
       const userId = req.user.id;
       const nickname = req.user.nickname;
 
-      console.log(groupId, userId, nickname, groupId, title, content, imageUrl, isPublic, location, moment);
+      //그룹 내 사람만 등록 가능
+      const [authRow] = await db.execute(`
+        SELECT * FROM PARTICIPATE
+        WHERE userId = ? AND groupId = ?
+        `, [userId, groupId]
+      )
+      if(isPublic === false && (!authRow || authRow.length === 0)){
+        return res.status(400).json({ message: err || "권한이 없습니다" });
+      }
+
 
       //게시글 POST 테이블 등록 (id는 자동 등록)
       const [result] = await db.execute(`
