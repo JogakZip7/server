@@ -16,8 +16,8 @@ CREATE TABLE `GROUP` (
   introduction TEXT,
   postCount INT,
   createdAt DATETIME,
-  memberCount INT
-  
+  memberCount INT,
+  badges JSON DEFAULT ('[]')  
 );
 
 -- POST 테이블
