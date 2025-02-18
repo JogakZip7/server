@@ -96,21 +96,25 @@ async function connectDB() {
   const likepostRoutes = require("./routes/post/likepost")(db);
   app.use("/api/posts", likepostRoutes);
 
+  // scrapPost 라우트 연결 (게시글 스크랩하기)
+  const scrapPostRoutes = require("./routes/post/scrapPost")(db);
+  app.use("/api/posts", scrapPostRoutes);
+
   // createComment 라우트 연결
-  const createComment = require("./routes/comment/createComment")(db);
-  app.use("/api/posts", createComment);
+  const createCommentRoutes = require("./routes/comment/createComment")(db);
+  app.use("/api/posts", createCommentRoutes);
 
   // readComment 라우트 연결
-  const readComment = require("./routes/comment/readComment")(db);
-  app.use("/api/posts", readComment);
+  const readCommentRoutes = require("./routes/comment/readComment")(db);
+  app.use("/api/posts", readCommentRoutes);
 
   // updateCommnet 라우트 연결
-  const updateCommnet = require("./routes/comment/updateCommnet")(db);
-  app.use("/api/comments", updateCommnet);
+  const updateCommnetRoutes = require("./routes/comment/updateCommnet")(db);
+  app.use("/api/comments", updateCommnetRoutes);
 
   // deleteComment 라우트 연결
-  const deleteComment = require("./routes/comment/deleteComment")(db);
-  app.use("/api/comments", deleteComment);
+  const deleteCommentRoutes = require("./routes/comment/deleteComment")(db);
+  app.use("/api/comments", deleteCommentRoutes);
 
   // 서버 시작
   app.listen(PORT, () => {
