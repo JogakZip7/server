@@ -35,11 +35,28 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 	
 }
 
-# 게시글 수정
+# 게시글 수정 (abcde)
 ###
 PUT http://localhost:3000/api/posts/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk3MzMzNTUsImV4cCI6MTczOTc1MTM1NX0.XP-HLoylKpVxgp0GnXMsV92PMQZEmCLNCfEghlVdnrU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk4NDE1MDMsImV4cCI6MTczOTg1OTUwM30.25X9dVdhVjWk_hX9R2AJ1tZz8-8IzmQueZAdO_xNWsg
+
+{
+	"title": "post2",
+	"content": "post2_content",
+	"postPassword": "post2",
+	"imageUrl": "post2_imageUrl",
+	"location": "post1_location",
+	"moment": "2025-02-17T00:00:00",
+	"isPublic": true
+
+}
+
+# 게시글 수정(abcde2)
+###
+PUT http://localhost:3000/api/posts/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVjOWViMGZjLWY0NTAtNGI1Ny1iOWM2LTZmOWY2ODFiNjQ5MCIsIm5pY2tuYW1lIjoiYWJjZGUyIiwiaWF0IjoxNzM5ODQxNjcwLCJleHAiOjE3Mzk4NTk2NzB9.jijAO6GGdgepOY6NwOPmLvL8gERlhhAGcTHxNa5eqUM
 
 {
 	"title": "post2",
@@ -53,6 +70,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 }
 
 
+
+
+
 #게시글 삭제
 ###
 DELETE http://localhost:3000/api/posts/5
@@ -64,7 +84,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 
 }
 
-#게시글 상세 정보 조회
+#게시글 상세 정보 조회 (abcde)
 ###
 GET http://localhost:3000/api/posts/4
 Content-Type: application/json
@@ -73,6 +93,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 {
 
 }
+
+#게시글 상세 정보 조회 (abcde2)
+###
+GET http://localhost:3000/api/posts/4
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVjOWViMGZjLWY0NTAtNGI1Ny1iOWM2LTZmOWY2ODFiNjQ5MCIsIm5pY2tuYW1lIjoiYWJjZGUyIiwiaWF0IjoxNzM5ODQyMTU5LCJleHAiOjE3Mzk4NjAxNTl9.3FgplKIR2dT6bzkGXPs3op_V7YD9FoFSnkw_Q30A6wI
+
+{
+
+}
+
 
 # #게시글 조회 권한 확인
 # ###
@@ -108,4 +139,24 @@ Content-Type: application/json
 {
 	"nickname":"abcde",
 	"password": "1234"
+}
+
+###
+
+POST http://localhost:3000/api/signup
+Content-Type: application/json
+
+{
+	"nickname":"abcde2",
+	"password": "12345"
+}
+
+###
+
+POST http://localhost:3000/api/signin
+Content-Type: application/json
+
+{
+	"nickname":"abcde2",
+	"password": "12345"
 }

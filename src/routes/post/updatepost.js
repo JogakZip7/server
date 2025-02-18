@@ -19,8 +19,8 @@ module.exports = (db) => {
 
     try {
       const userId = req.user.id;
-      const nickname = req.user.nickname;
 
+      
       //게시글 작성자인지 확인
       const [checkRow] = await db.execute(`
         SELECT userId FROM POST
@@ -49,9 +49,11 @@ module.exports = (db) => {
        }
 
        const [responseRow] = await db.execute(`
-         SELECT id, groupId, title, content, imageUrl, location, moment, isPublic, likeCount, commentCount, createdAt
-         FROM POST
-         WHERE id = ?`,
+          SELECT P.id, P.groupId, P.title, P.content, P.imageUrl, P.location, P.moment, P.isPublic,         
+                 P.likeCount, P.commentCount, P.createdAt, U.nickname
+          FROM POST P
+          JOIN USER U ON P.userId = U.id
+          WHERE P.id = ?`,
          [postId]
       );
 
@@ -59,7 +61,7 @@ module.exports = (db) => {
       const response = {
          id: responseRow[0].id,
          groupId: responseRow[0].groupId,
-         nickname: nickname,
+         nickname: responseRow[0].nickname,
          title: responseRow[0].title,
          content: responseRow[0].content,
          imageUrl: responseRow[0].imageUrl,
