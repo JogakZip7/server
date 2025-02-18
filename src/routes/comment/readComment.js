@@ -4,6 +4,7 @@ const auth = require("../../../middleware/auth");
 module.exports = (db) => {
     const router = express.Router();
     
+    // 댓글 조회 라우트
     router.get("/:postId/comments", auth, async (req, res) => {
         const { postId } = req.params;
         let { page, pageSize } = req.query;

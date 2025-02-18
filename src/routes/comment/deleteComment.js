@@ -4,6 +4,7 @@ const auth = require("../../../middleware/auth");
 module.exports = (db) => {
     const router = express.Router();
     
+    // 댓글 삭제 라우트
     router.delete("/comments/:commentId", auth, async (req, res) => {
         const { commentId } = req.params;
 
@@ -12,17 +13,29 @@ module.exports = (db) => {
         }
 
         try {
+            // 삭제하려는 댓글의 postId 조회 쿼리
+            const [deleteComment] = await db.execute(
+                "SELECT postId FROM COMMENT WHERE id = ?",
+                [commentId]
+            );
+
+            if (deleteComment.length === 0) {
+                return res.status(404).json({ message: "존재하지 않습니다" });
+            }
+
             // 댓글 삭제 쿼리
             const [result] = await db.execute(
                 "DELETE FROM COMMENT WHERE id = ?",
                 [commentId]
             );
 
-            if (result.affectedRows === 0) {
-                return res.status(404).json({ message: "존재하지 않습니다" });
-            }
+            // 댓글이 삭제되면 해당 게시글의 commentCount 감소
+            await db.execute(
+                "UPDATE POST SET commentCount = commentCount - 1 WHERE id = ?",
+                [deleteComment[0].postId]
+            );
 
-            res.status(200).json({ message: "답글 삭제 성공" });
+            res.status(200).json({ message: "댓글 삭제 성공" });
         } catch (err) {
             res.status(500).json({ message: err.message || "서버 오류가 발생했습니다" });
         }
