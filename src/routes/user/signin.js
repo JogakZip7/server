@@ -31,10 +31,10 @@ module.exports = (db) => {
 
       
 
-      res.status(200).json({ message: "Login successful", token });
+      res.status(200).json({ message: "로그인이 완료되었습니다", token });
     } catch (err) {
       console.error(err);
-      res.status(500).send("Error logging in");
+      res.status(500).send("로그인에 에러가 발생하였습니다");
     }
   });
 

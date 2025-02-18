@@ -21,10 +21,10 @@ module.exports = (db) => {
         hashedPassword,
       ]);
 
-      res.status(201).send("User registered!");
+      res.status(201).send("회원가입이 완료되었습니다");
     } catch (err) {
       console.error(err);
-      res.status(500).send("Error registering user");
+      res.status(400).send("잘못된 요청입니다");
     }
   });
 
