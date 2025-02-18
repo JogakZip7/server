@@ -15,7 +15,7 @@ module.exports = (db) => {
 
     
     try {
-      const userId = req.user.id;
+      const userId = req.user.id;   //로그인한 유저 아이디
 
       //비공개 게시글이 속한 그룹의 사람인지 확인
       const [authRow] = await db.execute(`
@@ -70,7 +70,7 @@ module.exports = (db) => {
 
 
 
-      //응답 데이터
+      //response 객체
       const response = {
         currentPage: page,
         totalPages: totalPages,

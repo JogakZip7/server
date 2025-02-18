@@ -20,7 +20,7 @@ module.exports = (db) => {
       const groupId = groupRow[0].groupId;
       const isPublic = groupRow[0].isPublic;
 
-      //비공개 게시물인 경우 상세정보 조회 권한 확인 (<- 불필요)
+      //비공개 게시물인 경우 상세정보 조회 권한 확인 (<- group 차원에서 막힐 것 같지만 일단 구현해놓았습니다.)
       const [authRow] = await db.execute(`
         SELECT * FROM PARTICIPATE
         WHERE userId = ? AND groupId = ?
@@ -41,7 +41,7 @@ module.exports = (db) => {
       const result = postRow[0];
 
       //response 객체
-      const post = {
+      const response = {
         id: result.id,
         groupId: result.groupId,
         nickname: result.nickname,
@@ -55,7 +55,7 @@ module.exports = (db) => {
         commentCount: result.commentCount,
         createdAt: result.createdAt,
       };
-      res.status(200).json(post);
+      res.status(200).json(response);
     } catch (err) {
       res.status(400).json({ message: "잘못된 요청입니다" });
     }

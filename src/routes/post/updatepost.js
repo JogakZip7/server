@@ -18,7 +18,7 @@ module.exports = (db) => {
     const { postId } = req.params;
 
     try {
-      const userId = req.user.id;
+      const userId = req.user.id;   //로그인한 유저 아이디
 
       
       //게시글 작성자인지 확인
@@ -48,6 +48,7 @@ module.exports = (db) => {
         return res.status(404).json({message: "게시글이 존재하지 않습니다"});
        }
 
+       //response용 정보 받아오기
        const [responseRow] = await db.execute(`
           SELECT P.id, P.groupId, P.title, P.content, P.imageUrl, P.location, P.moment, P.isPublic,         
                  P.likeCount, P.commentCount, P.createdAt, U.nickname
@@ -57,7 +58,7 @@ module.exports = (db) => {
          [postId]
       );
 
-
+      //response 객체
       const response = {
          id: responseRow[0].id,
          groupId: responseRow[0].groupId,
