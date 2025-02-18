@@ -15,11 +15,11 @@ app.use(bodyParser.json()); // JSON 요청파싱
 async function connectDB() {
   try {
     const db = await mysql.createConnection({
-      host: "localhost",
-      user: "root",
-      password: "1234",
-      database: "team7_db",
-      port: 3306
+      host: process.env.DATABASE_HOST,
+      user: process.env.DATABASE_USER,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_DBNAME,
+      port: process.env.DATABASE_PORT
     });
     console.log("Connected to the database!");
     return db; // 연결된 db 객체 반환
