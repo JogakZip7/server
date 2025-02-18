@@ -15,7 +15,7 @@ module.exports = (db) => {
         WHERE id = ?`, [postId]
       );
       if (checkRow[0].userId !== userId) {
-        throw new Error('권한이 없습니다.');
+        return res.status(400).json({ message: "삭제 권한이 없습니다" });
       }
 
 
@@ -30,9 +30,6 @@ module.exports = (db) => {
       //게시글이 없을 때
       else return res.status(404).json({ message: "존재하지 않습니다"});
 
-      // Api 수정 필요
-      // if(  ) return res.status(403).json({ message: "비밀번호가 틀렸습니다"});
-      
     } catch (err) {
       // 기타 에러
       res.status(400).json({ message: "잘못된 요청입니다" });

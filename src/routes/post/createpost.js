@@ -22,7 +22,7 @@ module.exports = (db) => {
         `, [userId, groupId]
       )
       if(isPublic === false && (!authRow || authRow.length === 0)){
-        return res.status(400).json({ message: err || "권한이 없습니다" });
+        return res.status(400).json({ message: "등록 권한이 없습니다" });
       }
 
 
@@ -49,7 +49,7 @@ module.exports = (db) => {
  
       res.status(200).json(post);
     } catch (err) {
-      res.status(400).json({ message: err.message || "잘못된 요청입니다" });
+      res.status(400).json({ message: "잘못된 요청입니다" });
     }
   });
 
