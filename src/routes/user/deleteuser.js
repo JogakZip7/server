@@ -31,10 +31,10 @@ module.exports = (db) => {
       // 사용자 삭제
       await db.execute("DELETE FROM USER WHERE nickname = ?", [nickname]);
 
-      res.status(200).json({ message: "User account deleted successfully" });
+      res.status(200).json({ message: "회원탈퇴 되었습니다" });
     } catch (err) {
       console.error(err);
-      res.status(500).send("Error deleting user account");
+      res.status(500).send("회원탈퇴에 오류가 발생하였습니다");
     }
   });
 

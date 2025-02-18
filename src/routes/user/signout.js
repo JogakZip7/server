@@ -6,7 +6,7 @@ module.exports = () => {
   // 로그아웃 라우트
   router.post("/signout", (req, res) => {
     // 클라이언트 측에서 JWT 토큰을 삭제하도록 유도하는 응답
-    res.status(200).json({ message: "Logout successful" });
+    res.status(200).json({ message: "로그아웃 되었습니다" });
   });
 
   return router;
