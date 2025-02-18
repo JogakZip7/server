@@ -7,7 +7,7 @@ module.exports = (db) => {
     const { postId } = req.params;
 
     try {
-      const userId = req.user.id;
+      const userId = req.user.id; //로그인한 유저 아이디
 
       const [result] = await db.execute(`
         SELECT * FROM \`LIKE\`
@@ -26,10 +26,8 @@ module.exports = (db) => {
           INSERT INTO \`LIKE\` (postId, userId)
           VALUES (?, ?)`, [postId, userId]);
         
-        console.log(result.length);
         res.status(200).json({ message: '게시글 공감하기 성공'})
       } else if(result.length > 0){
-        //이미 공감한 경우
         res.status(200).json({ message: '이미 공감한 게시글입니다'})
       } else{
         throw new Error();

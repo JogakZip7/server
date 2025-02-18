@@ -7,7 +7,7 @@ module.exports = (db) => {
     const { postId } = req.params;
 
     try {
-      const userId = req.user.id;
+      const userId = req.user.id;   //로그인한 유저 아이디
       
       //게시글 삭제 권한 확인
       const [checkRow] = await db.execute(`

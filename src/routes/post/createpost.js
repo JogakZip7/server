@@ -12,8 +12,8 @@ module.exports = (db) => {
 
 
     try {
-      const userId = req.user.id;
-      const nickname = req.user.nickname;
+      const userId = req.user.id;           //로그인한 유저 아이디
+      const nickname = req.user.nickname;   //로그인한 유저 닉네임
 
       //그룹 내 사람만 등록 가능
       const [authRow] = await db.execute(`
@@ -32,7 +32,8 @@ module.exports = (db) => {
         [userId, groupId, title, content, imageUrl, isPublic, location, moment]
       );
       
-      const post = {
+      //response 객체.
+      const response = {
         id: result.insertId,
         groupId,
         nickname,
@@ -47,7 +48,7 @@ module.exports = (db) => {
         createdAt: new Date().toISOString(),
       };
  
-      res.status(200).json(post);
+      res.status(200).json(response);
     } catch (err) {
       res.status(400).json({ message: "잘못된 요청입니다" });
     }
