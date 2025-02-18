@@ -14,7 +14,37 @@ module.exports = (db) => {
       if (!groupRows.length) throw { status: 404, message: "존재하지 않는 그룹입니다" };
 
       const { id, name, imageUrl, postCount, introduction } = groupRows[0];
-      res.status(200).json({ id, name, imageUrl, badges: [], postCount, introduction });
+
+      let existingBadges = badges ? JSON.parse(badges) : [];
+
+      // group 내 likeCount
+      const [likeCountRow] = await db.execute(
+        "SELECT SUM(likeCount) AS totalLikes FROM POST WHERE groupId = ?",
+        [groupId]
+      );
+ 
+      let totalLikes = likeCountRow[0]?.totalLikes;
+      if (totalLikes === null || totalLikes === undefined) {
+        totalLikes = 0;
+      }
+ 
+      let updated = false;
+      // 그룹 인원수 10명 달성
+      if (memberCount >= 10 && !existingBadges.includes("그룹 인원수 10명 달성")) {
+        existingBadges.push("그룹 인원수 10명 달성");
+        updated = true;
+      }
+      // 게시글 공감 20개 이상 받기
+      if (totalLikes >= 20 && !existingBadges.includes("게시글 공감 20개 이상 받기")) {
+        existingBadges.push("게시글 공감 20개 이상 받기");
+        updated = true;
+      }
+ 
+      if (updated) {
+        await db.execute("UPDATE `GROUP` SET badges = ? WHERE id = ?", [JSON.stringify(existingBadges), groupId]);
+      }
+
+      res.status(200).json({ id, name, imageUrl, badges: existingBadges, postCount, introduction });
     } catch (err) {
       res.status(err.status || 500).json({ message: err.message || "서버 오류가 발생했습니다" });
     }
