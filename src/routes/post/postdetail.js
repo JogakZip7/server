@@ -10,7 +10,6 @@ module.exports = (db) => {
     try {
 
       const userId = req.user.id;
-      const nickname = req.user.nickname;
 
       //게시글 그룹아이디, 공개여부 가져오기
       const [groupRow] = await db.execute(`
@@ -21,7 +20,7 @@ module.exports = (db) => {
       const groupId = groupRow[0].groupId;
       const isPublic = groupRow[0].isPublic;
 
-      //비공개 게시물인 경우 상세정보 조회 권한 확인
+      //비공개 게시물인 경우 상세정보 조회 권한 확인 (<- 불필요)
       const [authRow] = await db.execute(`
         SELECT * FROM PARTICIPATE
         WHERE userId = ? AND groupId = ?
@@ -34,8 +33,10 @@ module.exports = (db) => {
 
       //요청받은 postId에 맞는 튜플 가져오기
       const [postRow] = await db.execute(`
-        SELECT * FROM POST
-        WHERE id = ?`, [postId]
+        SELECT P.*, U.nickname
+        FROM POST P
+        JOIN USER U ON P.userId = U.id
+        WHERE P.id = ?`, [postId]
       );
       const result = postRow[0];
 
@@ -43,7 +44,7 @@ module.exports = (db) => {
       const post = {
         id: result.id,
         groupId: result.groupId,
-        nickname,
+        nickname: result.nickname,
         title: result.title,
         content: result.content,
         imageUrl: result.imageUrl,
