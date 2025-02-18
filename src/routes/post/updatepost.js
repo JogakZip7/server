@@ -27,7 +27,7 @@ module.exports = (db) => {
         WHERE id = ?`, [postId]
       );
       if (checkRow[0].userId !== userId) {
-        throw new Error('권한이 없습니다.');
+        return res.status(404).json({message: "수정 권한이 없습니다"});
       }
       
       
@@ -45,7 +45,7 @@ module.exports = (db) => {
          [title, content, imageUrl, location, moment, isPublic, postId]
        );
        if(result.affectedRows === 0){
-         return res.status(404).json({message: "존재하지 않습니다"});
+        return res.status(404).json({message: "게시글이 존재하지 않습니다"});
        }
 
        const [responseRow] = await db.execute(`
@@ -74,7 +74,7 @@ module.exports = (db) => {
       res.status(200).json(response);
 
     } catch (err) {
-      res.status(400).json({ message: err || "잘못된 요청입니다" });
+      res.status(400).json({ message: "잘못된 요청입니다" });
     }
   });
   return router;
