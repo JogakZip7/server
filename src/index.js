@@ -52,10 +52,6 @@ async function connectDB() {
   // postdetail 라우트 연결 (게시글 상세 정보 조회)
     const postdetailRoutes = require("./routes/post/postdetail")(db);
     app.use("/api/posts", postdetailRoutes);
-
-  // // postpermission 라우트 연결 (게시글 조회 권한 확인)
-  // const postpermissionRoutes = require("./routes/post/postpermission")(db);
-  // app.use("/api/posts/:postId/verify-password", postpermissionRoutes);
   
   // likepost 라우트 연결 (게시글 공감하기)
   const likepostRoutes = require("./routes/post/likepost")(db);

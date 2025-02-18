@@ -4,37 +4,28 @@ const auth = require("../../../middleware/auth");
 module.exports = (db) => {
   const router = express.Router();
   router.get("/:groupId/posts", auth, async (req, res) => {
+    const {groupId} = req.params;
     const {
       page = 1,
       pageSize = 12,
       sortBy = "latest",
       keyword,
       isPublic = true,
-      groupId,
-    } = req.params;
+    } = req.query;
 
     
     try {
-      
       const userId = req.user.id;
 
-      //PARTICIPATE 테이블로 확인
+      //비공개 게시글이 속한 그룹의 사람인지 확인
       const [authRow] = await db.execute(`
         SELECT * FROM PARTICIPATE
         WHERE userId = ? AND groupId = ?
         `, [userId, groupId]
       )
-      if(!authRow || authRow.length !== 1){
-        throw new Error();
+      if(isPublic === false && (!authRow || authRow.length === 0)){
+        return res.status(400).json({ message: err || "권한이 없습니다" });
       }
-
-
-
-
-
-
-
-
 
       //총 페이지 수 및 총 게시글 수 카운트
       const [countPost] = await db.execute(
@@ -42,46 +33,42 @@ module.exports = (db) => {
         SELECT COUNT(*) AS totalCount
         FROM POST
         WHERE groupId = ? AND isPublic = ?`,
-        [groupId, isPublic]
+        [groupId, isPublic ? 1 : 0]
       );
       const totalItemCount = countPost[0].totalCount;
       const totalPages = Math.ceil(totalItemCount / pageSize);
+      const offset = (page - 1) * (pageSize);
 
       // 테이블 정렬 기준 정하기
       let sort = "";
       switch (sortBy) {
         case "latest":
-          sort = "ORDER BY createdAt DESC";
+          sort = "createdAt";
           break;
         case "mostCommented":
-          sort = "ORDER BY commentCount DESC";
+          sort = "commentCount";
           break;
         case "mostLiked":
-          sort = "ORDER BY likeCount DESC";
+          sort = "likeCount";
           break;
         default:
-          sort = "ORDER BY createdAt DESC";
+          sort = "createdAt";
       }
 
       //POST 테이블 정렬 후 페이지에 따른 필터링
-      const [result] = await db.execute(
+      const [result] = await db.query(
         `
-        SELECT * FROM POST
-        WHERE groupId = ? AND isPublic = ?
-        ${sort}
-        LIMIT ? OFFSET ?`,
-        [groupId, isPublic, pageSize, (page - 1) * pageSize]
+          SELECT P.*, U.nickname
+          FROM POST P
+          JOIN USER U ON P.userId = U.id
+          WHERE P.groupId = ? AND P.isPublic = ?
+          ORDER BY ${db.escapeId(sort)} DESC
+          LIMIT ? OFFSET ?
+        `,
+        [groupId, isPublic ? 1 : 0, parseInt(pageSize), parseInt(offset)]
       );
 
-      //(임시용)userId를 통해 nickname 받아오기->post테이블에 닉네임 추가 예정
-      const [nicknameRow] = await db.execute(
-        `
-        SELECT nickname
-        FROM USERS
-        WHERE id = ?`,
-        [userId]
-      );
-      const nickname = nicknameRow[0]?.nickname;
+
 
       //응답 데이터
       const response = {
@@ -90,7 +77,7 @@ module.exports = (db) => {
         totalItemCount: totalItemCount,
         data: result.map((post) => ({
           id: post.id,
-          nickname: nickname, //테이블 nickname 추가. 수정 필요.
+          nickname: post.nickname,
           title: post.title,
           imageUrl: post.imageUrl,
           location: post.location,
@@ -101,6 +88,7 @@ module.exports = (db) => {
           createdAt: post.createdAt,
         })),
       };
+
 
       res.status(200).json(response);
     } catch (err) {

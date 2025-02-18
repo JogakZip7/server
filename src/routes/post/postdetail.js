@@ -12,20 +12,22 @@ module.exports = (db) => {
       const userId = req.user.id;
       const nickname = req.user.nickname;
 
-      //게시글 그룹아이디 가져오기
+      //게시글 그룹아이디, 공개여부 가져오기
       const [groupRow] = await db.execute(`
-        SELECT groupId FROM POST
+        SELECT groupId, isPublic
+        FROM POST
         WHERE id = ?`, [postId]
       );
       const groupId = groupRow[0].groupId;
+      const isPublic = groupRow[0].isPublic;
 
-      //상세정보 조회 권한 확인
+      //비공개 게시물인 경우 상세정보 조회 권한 확인
       const [authRow] = await db.execute(`
         SELECT * FROM PARTICIPATE
         WHERE userId = ? AND groupId = ?
         `, [userId, groupId]
       )
-      if(!authRow || authRow.length !== 1){
+      if( isPublic === false && (!authRow || authRow.length === 0) ){
         return res.status(400).json({ message: err || "권한이 없습니다" });
       }
 
@@ -54,7 +56,7 @@ module.exports = (db) => {
       };
       res.status(200).json(post);
     } catch (err) {
-      res.status(400).json({ message: err || "잘못된 요청입니다" });
+      res.status(400).json({ message: "잘못된 요청입니다" });
     }
   
   });

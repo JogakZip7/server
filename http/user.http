@@ -27,14 +27,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 
 #게시글 목록 조회 (그룹 내)
 ###
-GET http://localhost:3000/api/groups/group1/posts?page=1&pageSize=10&sortBy=latest&keyword=example&isPublic=true&groupId=1
+GET http://localhost:3000/api/groups/1/posts?page=1&pageSize=10&sortBy=latest&keyword=example&isPublic=true&groupId=1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk3MzMzNTUsImV4cCI6MTczOTc1MTM1NX0.XP-HLoylKpVxgp0GnXMsV92PMQZEmCLNCfEghlVdnrU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk4MzcxNzcsImV4cCI6MTczOTg1NTE3N30.FHeQVpeKjad1hmlorEZwNd1fJQAy8T_f18V5dbvu1oo
 
 {
 	
 }
 
+# 게시글 수정
 ###
 PUT http://localhost:3000/api/posts/4
 Content-Type: application/json
@@ -67,7 +68,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0L
 ###
 GET http://localhost:3000/api/posts/4
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk3MzMzNTUsImV4cCI6MTczOTc1MTM1NX0.XP-HLoylKpVxgp0GnXMsV92PMQZEmCLNCfEghlVdnrU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6Ijk0ZTBmZmY0LTY2OWQtNDE0Zi04ZThkLWZlNjk5ZmVlOWEwZSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk4Mzc5ODYsImV4cCI6MTczOTg1NTk4Nn0.LX2XbAgdgTnl_DhnfVkY2VEeCWiZaW3xo1EpNAEX2yg
 
 {
 
