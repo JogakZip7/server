@@ -9,7 +9,7 @@ module.exports = (db) => {
         const { postId } = req.params;
         let { page=1, pageSize=8 } = req.query;
 
-        if (!postId || !page || !pageSize) {
+        if (!postId) {
             return res.status(400).json({ message: "잘못된 요청입니다" });
         }
 
@@ -31,7 +31,7 @@ module.exports = (db) => {
             const totalPages = Math.ceil(totalItemCount / pageSize);
 
             // 댓글 목록 조회
-            const [comments] = await db.execute(
+            const [comments] = await db.query(
                 "SELECT c.id, u.nickname, c.content, c.createdAt " +
                 "FROM COMMENT c JOIN USER u ON c.userId = u.id " +
                 "WHERE c.postId = ? " +

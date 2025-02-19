@@ -5,7 +5,7 @@ module.exports = (db) => {
     const router = express.Router();
     
     // 댓글 삭제 라우트
-    router.delete("/comments/:commentId", auth, async (req, res) => {
+    router.delete("/:commentId", auth, async (req, res) => {
         const { commentId } = req.params;
 
         if (!commentId) {
