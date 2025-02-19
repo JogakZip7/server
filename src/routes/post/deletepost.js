@@ -15,7 +15,7 @@ module.exports = (db) => {
         WHERE id = ?`, [postId]
       );
       if (checkRow[0].userId !== userId) {
-        return res.status(400).json({ message: "삭제 권한이 없습니다" });
+        return res.status(401).json({ message: "삭제 권한이 없습니다" });
       }
 
 

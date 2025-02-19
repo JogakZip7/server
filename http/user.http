@@ -100,6 +100,16 @@ Authorization: Bearer
 
 }
 
+//댓글 조회
+###
+GET http://localhost:3000/api/posts/4/comments
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxZTI4NzU2LWFhNjMtNDczYS1hOGUyLTc3ZTliNGQ4YTI4OSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk5NzQxNjksImV4cCI6MTczOTk5MjE2OX0.ChabMQDz9ETFGfS-NKkDcmPAzuajdQLU2PumSdE0zho
+
+{
+
+}
+
 
 # #게시글 조회 권한 확인
 # ###

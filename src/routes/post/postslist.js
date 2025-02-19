@@ -9,7 +9,6 @@ module.exports = (db) => {
       page = 1,
       pageSize = 8,
       sortBy = "latest",
-      keyword,
       isPublic = true,
     } = req.query;
 
@@ -24,7 +23,7 @@ module.exports = (db) => {
         `, [userId, groupId]
       )
       if(isPublic === false && (!authRow || authRow.length === 0)){
-        return res.status(400).json({ message: "조회 권한이 없습니다" });
+        return res.status(401).json({ message: "조회 권한이 없습니다" });
       }
 
       //총 페이지 수 및 총 게시글 수 카운트

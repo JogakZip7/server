@@ -28,7 +28,7 @@ module.exports = (db) => {
         
         res.status(200).json({ message: '게시글 공감하기 성공'})
       } else if(result.length > 0){
-        res.status(200).json({ message: '이미 공감한 게시글입니다'})
+        res.status(409).json({ message: '이미 공감한 게시글입니다'})
       } else{
         throw new Error();
       }
