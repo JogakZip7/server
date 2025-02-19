@@ -16,7 +16,7 @@ module.exports = (db) => {
         [ownerId, name, imageUrl, introduction]
       );
 
-      await db.execute("INSERT INTO PARTICIPATE (userId, groupId) VALUES (?, ?)", [userId, result.insertId]);
+      await db.execute("INSERT INTO PARTICIPATE (ownerId, groupId) VALUES (?, ?)", [userId, result.insertId]);
       res.status(201).json({ id: result.insertId, owner: ownerId, name, imageUrl, introduction, postCount: 0, badges: [] });
     } catch (err) {
       res.status(err.status || 500).json({ message: err.message || "서버 오류가 발생했습니다" });
