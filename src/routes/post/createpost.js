@@ -16,7 +16,7 @@ module.exports = (db) => {
       const nickname = req.user.nickname;   //로그인한 유저 닉네임
 
       //그룹 내 사람만 등록 가능
-      const [authRow] = await db.execute(`
+      const [authRow] = await db.query(`
         SELECT * FROM PARTICIPATE
         WHERE userId = ? AND groupId = ?
         `, [userId, groupId]
@@ -32,7 +32,7 @@ module.exports = (db) => {
       );
       
       //게시글 등록 완료 후 postCount 1 증가
-      await db.execute(`
+      await db.query(`
         UPDATE \`GROUP\`
         SET postCount = postCount + 1
         WHERE id = ?`, [groupId]

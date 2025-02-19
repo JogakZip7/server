@@ -12,7 +12,7 @@ module.exports = (db) => {
       const userId = req.user.id;
 
       //게시글 그룹아이디, 공개여부 가져오기
-      const [groupRow] = await db.execute(`
+      const [groupRow] = await db.query(`
         SELECT groupId, isPublic
         FROM POST
         WHERE id = ?`, [postId]
@@ -21,7 +21,7 @@ module.exports = (db) => {
       const isPublic = groupRow[0].isPublic;
 
       //비공개 게시물인 경우 상세정보 조회 권한 확인 (<- group 차원에서 막힐 것 같지만 일단 구현해놓았습니다.)
-      const [authRow] = await db.execute(`
+      const [authRow] = await db.query(`
         SELECT * FROM PARTICIPATE
         WHERE userId = ? AND groupId = ?
         `, [userId, groupId]
@@ -32,7 +32,7 @@ module.exports = (db) => {
 
 
       //요청받은 postId에 맞는 튜플 가져오기
-      const [postRow] = await db.execute(`
+      const [postRow] = await db.query(`
         SELECT P.*, U.nickname
         FROM POST P
         JOIN USER U ON P.userId = U.id

@@ -23,7 +23,7 @@ module.exports = (db) => {
       }
 
       // 닉네임으로 사용자 조회
-      const [rows] = await db.execute("SELECT * FROM USER WHERE nickname = ?", [nickname]);
+      const [rows] = await db.query("SELECT * FROM USER WHERE nickname = ?", [nickname]);
       if (rows.length === 0) {
         return res.status(404).send("User not found");
       }

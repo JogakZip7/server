@@ -9,7 +9,7 @@ module.exports = (db) => {
       const userId = req.user.id;
 
       // 내가 참여한 그룹 조회
-      const [groups] = await db.execute(
+      const [groups] = await db.query(
         `
         SELECT G.id, G.name, G.imageUrl, G.introduction, G.postCount, 
                (SELECT COUNT(*) FROM PARTICIPATE P WHERE P.groupId = G.id) AS badgeCount

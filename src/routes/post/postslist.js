@@ -17,7 +17,7 @@ module.exports = (db) => {
       const userId = req.user.id;   //로그인한 유저 아이디
 
       //비공개 게시글이 속한 그룹의 사람인지 확인
-      const [authRow] = await db.execute(`
+      const [authRow] = await db.query(`
         SELECT * FROM PARTICIPATE
         WHERE userId = ? AND groupId = ?
         `, [userId, groupId]
@@ -27,8 +27,7 @@ module.exports = (db) => {
       }
 
       //총 페이지 수 및 총 게시글 수 카운트
-      const [countPost] = await db.execute(
-        `
+      const [countPost] = await db.query(`
         SELECT COUNT(*) AS totalCount
         FROM POST
         WHERE groupId = ? AND isPublic = ?`,

@@ -130,7 +130,7 @@ async function connectDB() {
 
   // uploadImage 라우트 연결
   const uploadImageRoutes = require("./routes/image/uploadImage")(db);
-  app.use("/api", uploadImageRoutes);
+  app.use("/api/image", uploadImageRoutes);
 
   // 서버 시작
   app.listen(PORT, () => {

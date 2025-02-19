@@ -20,7 +20,7 @@ module.exports = (db) => {
     const upload = multer({ storage: storage }).single('image'); // 'image'는 폼 데이터의 필드 이름
 
     // 이미지 업로드 라우트
-    router.post("/image", auth, async (req, res) => {
+    router.post("/", auth, async (req, res) => {
         try {
             upload(req, res, function (err) {
                 if (err) { // 업로드 중 오류가 발생하면 처리

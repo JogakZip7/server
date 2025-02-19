@@ -13,7 +13,7 @@ module.exports = (db) => {
       }
 
       // 랜덤하게 그룹 가져오기
-      const [groupRows] = await db.execute(
+      const [groupRows] = await db.query(
         `SELECT id, name, imageUrl, introduction 
          FROM \`GROUP\` 
          ORDER BY RAND() 

@@ -15,7 +15,7 @@ module.exports = (db) => {
 
         try {
             // 스크랩 되어 있는지 확인
-            const [result] = await db.execute(
+            const [result] = await db.query(
                 "SELECT * FROM SCRAP WHERE userId = ? AND postId = ?",
                 [userId, postId]
             );

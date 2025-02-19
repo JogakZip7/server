@@ -9,10 +9,10 @@ module.exports = (db) => {
       const userId = req.user.id;
       const { groupId } = req.params;
 
-      const [groupRows] = await db.execute("SELECT memberCount FROM `GROUP` WHERE id = ?", [groupId]);
+      const [groupRows] = await db.query("SELECT memberCount FROM `GROUP` WHERE id = ?", [groupId]);
       if (!groupRows.length) throw { status: 404, message: "존재하지 않는 그룹입니다" };
 
-      const [existing] = await db.execute("SELECT * FROM PARTICIPATE WHERE userId = ? AND groupId = ?", [userId, groupId]);
+      const [existing] = await db.query("SELECT * FROM PARTICIPATE WHERE userId = ? AND groupId = ?", [userId, groupId]);
       if (existing.length) throw { status: 400, message: "이미 가입된 그룹입니다" };
 
       await db.execute("INSERT INTO PARTICIPATE (userId, groupId) VALUES (?, ?)", [userId, groupId]);

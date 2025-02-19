@@ -24,7 +24,7 @@ module.exports = (db) => {
             }
 
             // 댓글 삭제 쿼리
-            const [result] = await db.execute(
+            await db.execute(
                 "DELETE FROM COMMENT WHERE id = ?",
                 [commentId]
             );

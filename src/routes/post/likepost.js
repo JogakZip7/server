@@ -9,7 +9,7 @@ module.exports = (db) => {
     try {
       const userId = req.user.id; //로그인한 유저 아이디
 
-      const [result] = await db.execute(`
+      const [result] = await db.query(`
         SELECT * FROM \`LIKE\`
         WHERE postId = ? AND userId = ?`, [postId, userId]);
 

@@ -21,7 +21,7 @@ module.exports = (db) => {
 
       
       //게시글 작성자인지 확인
-      const [checkRow] = await db.execute(`
+      const [checkRow] = await db.query(`
         SELECT userId FROM POST
         WHERE id = ?`, [postId]
       );
@@ -48,7 +48,7 @@ module.exports = (db) => {
        }
 
        //response용 정보 받아오기
-       const [responseRow] = await db.execute(`
+       const [responseRow] = await db.query(`
           SELECT P.id, P.groupId, P.title, P.content, P.imageUrl, P.location, P.moment, P.isPublic,         
                  P.likeCount, P.commentCount, P.createdAt, U.nickname
           FROM POST P

@@ -11,7 +11,7 @@ module.exports = (db) => {
 
       if (!groupId) throw { status: 400, message: "잘못된 요청입니다" };
 
-      const [groupRows] = await db.execute("SELECT owner, memberCount FROM `GROUP` WHERE id = ?", [groupId]);
+      const [groupRows] = await db.query("SELECT owner, memberCount FROM `GROUP` WHERE id = ?", [groupId]);
       if (!groupRows.length) throw { status: 404, message: "존재하지 않는 그룹입니다" };
 
       const { owner, memberCount } = groupRows[0];

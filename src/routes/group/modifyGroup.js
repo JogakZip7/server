@@ -12,7 +12,7 @@ module.exports = (db) => {
 
       if (!groupId || !name || !imageUrl || !introduction) throw { status: 400, message: "잘못된 요청입니다" };
 
-      const [groupRows] = await db.execute(
+      const [groupRows] = await db.query(
         "SELECT owner FROM `GROUP` WHERE id = ?",
         [groupId]
       );
