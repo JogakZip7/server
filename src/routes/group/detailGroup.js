@@ -13,9 +13,16 @@ module.exports = (db) => {
       const [groupRows] = await db.execute("SELECT * FROM `GROUP` WHERE id = ?", [groupId]);
       if (!groupRows.length) throw { status: 404, message: "존재하지 않는 그룹입니다" };
 
-      const { id, name, imageUrl, postCount, introduction } = groupRows[0];
+      const { id, name, imageUrl, postCount, introduction, badges, memberCount } = groupRows[0];
 
-      let existingBadges = badges ? JSON.parse(badges) : [];
+      let existingBadges = [];
+      if (badges) {
+        if (typeof badges === "string") {
+          existingBadges = JSON.parse(badges);
+        } else if (Array.isArray(badges)) {
+          existingBadges = badges;
+        }
+      }
 
       // group 내 likeCount
       const [likeCountRow] = await db.execute(

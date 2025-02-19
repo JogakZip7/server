@@ -11,13 +11,13 @@ module.exports = (db) => {
 
       if (!groupId) throw { status: 400, message: "잘못된 요청입니다" };
 
-      const [groupRows] = await db.execute("SELECT ownerId, memberCount FROM `GROUP` WHERE id = ?", [groupId]);
+      const [groupRows] = await db.execute("SELECT owner, memberCount FROM `GROUP` WHERE id = ?", [groupId]);
       if (!groupRows.length) throw { status: 404, message: "존재하지 않는 그룹입니다" };
 
-      const { ownerId, memberCount } = groupRows[0];
+      const { owner, memberCount } = groupRows[0];
 
       // 그룹 소유자는 탈퇴 불가능
-      if (ownerId === userId) {
+      if (owner === userId) {
         throw { status: 403, message: "그룹장은 탈퇴할 수 없습니다" };
       }
 
