@@ -5,7 +5,7 @@ module.exports = (db) => {
   const router = express.Router();
 
   router.get("/myscraps", auth, async (req, res) => {
-    const { page = 1, pageSize = 10, sortBy = "latest" } = req.query;
+    const { page = 1, pageSize = 8, sortBy = "latest" } = req.query;
     const offset = Number(page - 1) * Number(pageSize);  // 숫자 변환 보장
     let orderByClause = "P.createdAt DESC"; // 기본 정렬: 최신순
 

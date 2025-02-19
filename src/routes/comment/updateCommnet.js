@@ -5,7 +5,7 @@ module.exports = (db) => {
     const router = express.Router();
     
     // 댓글 수정 라우트
-    router.put("/comments/:commentId", auth, async (req, res) => {
+    router.put("/:commentId", auth, async (req, res) => {
         const { commentId } = req.params;
         const { content } = req.body;
 

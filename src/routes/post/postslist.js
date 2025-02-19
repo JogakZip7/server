@@ -7,7 +7,7 @@ module.exports = (db) => {
     const {groupId} = req.params;
     const {
       page = 1,
-      pageSize = 12,
+      pageSize = 8,
       sortBy = "latest",
       keyword,
       isPublic = true,

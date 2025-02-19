@@ -7,7 +7,7 @@ module.exports = (db) => {
     // 댓글 조회 라우트
     router.get("/:postId/comments", auth, async (req, res) => {
         const { postId } = req.params;
-        let { page, pageSize } = req.query;
+        let { page=1, pageSize=8 } = req.query;
 
         if (!postId || !page || !pageSize) {
             return res.status(400).json({ message: "잘못된 요청입니다" });
@@ -22,7 +22,7 @@ module.exports = (db) => {
 
         try {
             // 전체 댓글 수 조회
-            const [totalCountResult] = await db.execute(
+            const [totalCountResult] = await db.query(
                 "SELECT COUNT(*) AS totalCount FROM COMMENT WHERE postId = ?",
                 [postId]
             );
