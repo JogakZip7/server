@@ -15,7 +15,7 @@ module.exports = (db) => {
     console.log("Page:", page, "PageSize:", pageSize, "Offset:", offset); // 확인 로그
 
     try {
-      const [posts] = await db.execute(
+      const [posts] = await db.query(
         `
         SELECT P.id, U.nickname, P.title, P.imageUrl, P.location, P.moment, P.isPublic, 
                P.likeCount, P.commentCount
@@ -28,12 +28,7 @@ module.exports = (db) => {
         [req.user.id, parseInt(pageSize), parseInt(offset)]
       );
 
-      if (posts.length === 0) {
-        return res.status(200).json({
-          message: "스크랩한 게시글이 없습니다.",
-          data: [],
-        });
-      }
+
 
       res.status(200).json({
         data: posts.map(post => ({
@@ -50,7 +45,7 @@ module.exports = (db) => {
       });
     } catch (err) {
       console.error("SQL Error:", err);
-      res.status(500).json({ message: "잘못된 요청입니다" });
+      res.status(500).json({ message: "서버 오류가 발생했습니다" });
     }
   });
 
