@@ -31,6 +31,14 @@ module.exports = (db) => {
         [userId, groupId, title, content, imageUrl, isPublic, location, moment]
       );
       
+      //게시글 등록 완료 후 postCount 1 증가
+      await db.execute(`
+        UPDATE \`GROUP\`
+        SET postCount = postCount + 1
+        WHERE id = ?`, [groupId]
+      );
+
+
       //response 객체.
       const response = {
         id: result.insertId,
@@ -49,7 +57,7 @@ module.exports = (db) => {
  
       res.status(200).json(response);
     } catch (err) {
-      res.status(400).json({ message: "잘못된 요청입니다" });
+      res.status(400).json({ message: err.message || "잘못된 요청입니다" });
     }
   });
 
