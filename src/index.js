@@ -128,6 +128,10 @@ async function connectDB() {
   const deleteCommentRoutes = require("./routes/comment/deleteComment")(db);
   app.use("/api/comments", deleteCommentRoutes);
 
+  // uploadImage 라우트 연결
+  const uploadImageRoutes = require("./routes/image/uploadImage")(db);
+  app.use("/api", uploadImageRoutes);
+
   // 서버 시작
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);

@@ -27,7 +27,7 @@ module.exports = (db) => {
             }
 
             // 수정된 댓글 정보 조회
-            const [updateComment] = await db.execute(
+            const [updateComment] = await db.query(
                 "SELECT id, content, createdAt FROM COMMENT WHERE id = ?",
                 [commentId]
             );
