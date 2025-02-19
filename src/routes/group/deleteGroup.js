@@ -11,14 +11,20 @@ module.exports = (db) => {
 
       if (!groupId) throw { status: 400, message: "잘못된 요청입니다" };
 
-      const [groupRows] = await db.execute("SELECT * FROM `GROUP` WHERE id = ?", [groupId]);
-      if (!groupRows.length) throw { status: 404, message: "존재하지 않는 그룹입니다" };
+      const [groupRows] = await db.execute(
+        "SELECT owner FROM `GROUP` WHERE id = ?",
+        [groupId]
+      );
+
+      if (groupRows[0].owner !== userId) {
+        throw { status: 403, message: "그룹 삭제 권한이 없습니다" };
+      }
 
       await db.execute("DELETE FROM PARTICIPATE WHERE groupId = ?", [groupId]);
       await db.execute("DELETE FROM POST WHERE groupId = ?", [groupId]);
       await db.execute("DELETE FROM `GROUP` WHERE id = ?", [groupId]);
 
-      res.status(200).json({ message: "그룹 삭제 성공" });
+      res.status(200).json({ message: "그룹 삭제 완료" });
     } catch (err) {
       res.status(err.status || 500).json({ message: err.message || "서버 오류가 발생했습니다" });
     }
