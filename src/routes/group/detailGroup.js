@@ -10,6 +10,15 @@ module.exports = (db) => {
       const { groupId } = req.params;
       if (!groupId) throw { status: 400, message: "잘못된 요청입니다" };
 
+      const [participation] = await db.execute(
+        "SELECT * FROM PARTICIPATE WHERE userId = ? AND groupId = ?",
+        [userId, groupId]
+      );
+
+      if (!participation.length) {
+        return res.status(403).json({ message: "열람 권한이 없습니다" });
+      }
+
       const [groupRows] = await db.execute("SELECT * FROM `GROUP` WHERE id = ?", [groupId]);
       if (!groupRows.length) throw { status: 404, message: "존재하지 않는 그룹입니다" };
 
