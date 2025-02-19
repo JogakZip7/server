@@ -32,6 +32,10 @@ async function connectDB() {
 (async () => {
   const db = await connectDB(); // DB 연결 완료
 
+  // 메인 화면
+  const grouplistRoutes = require("./routes/group/grouplist")(db);
+  app.use("/api/groups", grouplistRoutes);
+
   // signup 라우트 연결
   const signupRoutes = require("./routes/user/signup")(db);
   app.use("/api", signupRoutes);
@@ -72,9 +76,11 @@ async function connectDB() {
   const detailGroupRoutes = require("./routes/group/detailGroup")(db);
   app.use("/api/groups", detailGroupRoutes);
 
+  // joinGroup 라우트 연결
   const joinGroupRoutes = require("./routes/group/joinGroup")(db);
   app.use("/api/groups", joinGroupRoutes);
 
+  // leaveGroup 라우트 연결
   const leaveGroupRoutes = require("./routes/group/leaveGroup")(db);
   app.use("/api/groups", leaveGroupRoutes);
 
