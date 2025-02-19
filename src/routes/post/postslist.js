@@ -43,16 +43,16 @@ module.exports = (db) => {
       let sort = "";
       switch (sortBy) {
         case "latest":
-          sort = "createdAt";
+          sort = "P.createdAt";
           break;
         case "mostCommented":
-          sort = "commentCount";
+          sort = "P.commentCount";
           break;
         case "mostLiked":
-          sort = "likeCount";
+          sort = "P.likeCount";
           break;
         default:
-          sort = "createdAt";
+          sort = "P.createdAt";
       }
 
       //POST 테이블 정렬 후 페이지에 따른 필터링

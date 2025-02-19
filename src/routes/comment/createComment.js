@@ -28,6 +28,12 @@ module.exports = (db) => {
                 "SELECT id, content, createdAt FROM COMMENT WHERE id = ?",
                 [result.insertId]
             );
+
+            // 댓글이 등록되면 해당 게시글의 commentCount 증가
+            await db.execute(
+                "UPDATE POST SET commentCount = commentCount + 1 WHERE id = ?",
+                [postId]
+            );
             
             // 응답 형식에 맞게 반환
             const response = {

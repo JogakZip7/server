@@ -21,10 +21,9 @@ module.exports = (db) => {
         WHERE userId = ? AND groupId = ?
         `, [userId, groupId]
       )
-      if(isPublic === false && (!authRow || authRow.length === 0)){
+      if(!authRow || authRow.length === 0){
         return res.status(400).json({ message: "등록 권한이 없습니다" });
       }
-
 
       //게시글 POST 테이블 등록 (id는 자동 등록)
       const [result] = await db.execute(`

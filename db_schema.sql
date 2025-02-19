@@ -11,13 +11,14 @@ CREATE TABLE USER (
 -- GROUP 테이블
 CREATE TABLE `GROUP` (
   id INT PRIMARY KEY AUTO_INCREMENT,
+  owner VARCHAR(255),
   name VARCHAR(255),
   imageUrl VARCHAR(255),
   introduction TEXT,
   postCount INT,
-  createdAt DATETIME,
   memberCount INT,
-  badges JSON DEFAULT ('[]')  
+  badges JSON DEFAULT ('[]'),
+  FOREIGN KEY (owner) REFERENCES USER(id)
 );
 
 -- POST 테이블
