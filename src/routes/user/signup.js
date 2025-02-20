@@ -12,8 +12,13 @@ module.exports = (db) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
+<<<<<<< Updated upstream
       const [rows] = await db.execute("SELECT * FROM USER WHERE nickname = ?", [nickname]);
       if (rows.length > 0) return res.status(400).send("Nickname already taken");
+=======
+      const [rows] = await db.query("SELECT * FROM USER WHERE nickname = ?", [nickname]);
+      if (rows.length > 0) return res.status(409).send("이미 가입된 회원입니다");
+>>>>>>> Stashed changes
 
       await db.execute("INSERT INTO USER (id, nickname, password) VALUES (?, ?, ?)", [
         id,

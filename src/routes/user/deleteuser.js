@@ -9,7 +9,7 @@ module.exports = (db) => {
     const token = req.headers["authorization"]; // Authorization 헤더에서 JWT 토큰 가져오기
 
     if (!token) {
-      return res.status(401).send("No token provided");
+      return res.status(401).send("토큰이 없습니다");
     }
 
     try {
@@ -25,7 +25,7 @@ module.exports = (db) => {
       // 닉네임으로 사용자 조회
       const [rows] = await db.execute("SELECT * FROM USER WHERE nickname = ?", [nickname]);
       if (rows.length === 0) {
-        return res.status(404).send("User not found");
+        return res.status(404).send("유저를 찾을 수 없습니다");
       }
 
       // 사용자 삭제
