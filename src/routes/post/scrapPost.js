@@ -24,7 +24,7 @@ module.exports = (db) => {
                 return res.status(409).json({ message: "이미 스크랩한 게시글입니다"})
             }
 
-            // 스크랩 추가 쿼리
+            // 스크랩 추가
             await db.execute(
                 "INSERT INTO SCRAP (userId, postId) VALUES (?, ?)",
                 [userId, postId]

@@ -13,17 +13,19 @@ module.exports = (db) => {
         }
 
         try {
-            // 삭제하려는 댓글의 postId 조회 쿼리
+            const userId = req.user.id;
+
+            // 댓글 작성자인지 확인 및 postId 조회
             const [deleteComment] = await db.execute(
-                "SELECT postId FROM COMMENT WHERE id = ?",
+                "SELECT userId, postId FROM COMMENT WHERE id = ?",
                 [commentId]
             );
 
-            if (deleteComment.length === 0) {
-                return res.status(404).json({ message: "존재하지 않습니다" });
+            if (deleteComment[0].userId !== userId) {
+                return res.status(403).json({ message: "삭제 권한이 없습니다" });
             }
 
-            // 댓글 삭제 쿼리
+            // 댓글 삭제
             const [result] = await db.execute(
                 "DELETE FROM COMMENT WHERE id = ?",
                 [commentId]

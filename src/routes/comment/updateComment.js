@@ -14,7 +14,18 @@ module.exports = (db) => {
         }
 
         try {
+            const userId = req.user.id;
             const nickname = req.user.nickname;
+
+            // 댓글 작성자인지 확인
+            const [checkUser] = await db.query(
+                "SELECT userId FROM COMMENT WHERE id = ?",
+                [commentId]
+            );
+
+            if (checkUser[0].userId !== userId) {
+                return res.status(403).json({ message: "수정 권한이 없습니다" });
+            }
 
             // 댓글 수정 쿼리
             const [result] = await db.execute(

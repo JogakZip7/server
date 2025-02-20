@@ -17,7 +17,7 @@ module.exports = (db) => {
         try {
             const nickname = req.user.nickname;
 
-            // 댓글 등록 쿼리
+            // 댓글 등록
             const [result] = await db.execute(
                 "INSERT INTO COMMENT (postId, userId, content, createdAt) VALUES (?, ?, ?, NOW())",
                 [postId, userId, content]
