@@ -14,7 +14,7 @@ module.exports = (db) => {
 
         try {
             // 삭제하려는 댓글의 postId 조회 쿼리
-            const [deleteComment] = await db.query(
+            const [deleteComment] = await db.execute(
                 "SELECT postId FROM COMMENT WHERE id = ?",
                 [commentId]
             );
@@ -24,7 +24,7 @@ module.exports = (db) => {
             }
 
             // 댓글 삭제 쿼리
-            await db.execute(
+            const [result] = await db.execute(
                 "DELETE FROM COMMENT WHERE id = ?",
                 [commentId]
             );

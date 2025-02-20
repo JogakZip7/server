@@ -31,7 +31,7 @@ module.exports = (db) => {
             const totalPages = Math.ceil(totalItemCount / pageSize);
 
             // 댓글 목록 조회
-            const [comments] = await db.query(
+            const [comments] = await db.execute(
                 "SELECT c.id, u.nickname, c.content, c.createdAt " +
                 "FROM COMMENT c JOIN USER u ON c.userId = u.id " +
                 "WHERE c.postId = ? " +
