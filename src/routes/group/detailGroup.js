@@ -4,7 +4,7 @@ const auth = require("../../../middleware/auth");
 module.exports = (db) => {
   const router = express.Router();
 
-  router.get("/:groupId", auth, async (req, res) => {
+  router.get("/:groupId/details", auth, async (req, res) => {
     try {
       const userId = req.user.id;
       const { groupId } = req.params;

@@ -4,7 +4,7 @@ const auth = require("../../../middleware/auth");
 module.exports = (db) => {
   const router = express.Router();
 
-  router.get("/:postId", auth, async (req, res) => {
+  router.get("/:postId/details", auth, async (req, res) => {
     const { postId } = req.params;
     
     try {
