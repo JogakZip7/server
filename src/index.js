@@ -3,10 +3,17 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const bodyParser = require("body-parser");
 const mysql = require("mysql2/promise");
+const cors = require("cors");
 require("dotenv").config();  // .env 파일에서 환경 변수 로드
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+app.use(cors({
+  origin: ["http://jogakzip7.s3-website-us-east-1.amazonaws.com", "http://localhost:3000"], // S3 URL 허용
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));
 
 app.use(bodyParser.json()); // JSON 요청파싱
 
