@@ -26,7 +26,7 @@ module.exports = (db) => {
         WHERE id = ?`, [postId]
       );
       if (checkRow[0].userId !== userId) {
-        return res.status(401).json({message: "수정 권한이 없습니다"});
+        return res.status(403).json({message: "수정 권한이 없습니다"});
       }
       
       

@@ -22,7 +22,7 @@ module.exports = (db) => {
         `, [userId, groupId]
       )
       if(!authRow || authRow.length === 0){
-        return res.status(401).json({ message: "등록 권한이 없습니다" });
+        return res.status(403).json({ message: "등록 권한이 없습니다" });
       }
 
       //게시글 POST 테이블 등록 (id는 자동 등록)
