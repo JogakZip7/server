@@ -38,7 +38,7 @@ async function connectDB() {
 
   // signup 라우트 연결
   const signupRoutes = require("./routes/user/signup")(db);
-  app.use("/api", signupRoutes);
+  app.use("/", signupRoutes);
 
   // signin 라우트 연결
   const signinRoutes=require ("./routes/user/signin")(db);
