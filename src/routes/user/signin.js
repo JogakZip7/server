@@ -14,14 +14,14 @@ module.exports = (db) => {
       // 닉네임으로 사용자 조회
       const [rows] = await db.query("SELECT * FROM USER WHERE nickname = ?", [nickname]);
       if (rows.length === 0) {
-        return res.status(401).send("Invalid nickname or password");
+        return res.status(401).send({message: "유효하지 않은 닉네임입니다"});
       }
 
       const user = rows[0];
       // 비밀번호 검증
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(401).send("Invalid nickname or password");
+        return res.status(401).send({message: "유효하지 않은 비밀번호입니다"});
       }
 
       // JWT 토큰 생성
@@ -34,7 +34,7 @@ module.exports = (db) => {
       res.status(200).json({ message: "로그인이 완료되었습니다", token });
     } catch (err) {
       console.error(err);
-      res.status(500).send("로그인에 에러가 발생하였습니다");
+      res.status(500).send({ message: "로그인에 에러가 발생하였습니다"});
     }
   });
 
