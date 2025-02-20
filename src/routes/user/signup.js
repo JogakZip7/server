@@ -12,13 +12,8 @@ module.exports = (db) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     try {
-<<<<<<< Updated upstream
-      const [rows] = await db.execute("SELECT * FROM USER WHERE nickname = ?", [nickname]);
-      if (rows.length > 0) return res.status(400).send("Nickname already taken");
-=======
       const [rows] = await db.query("SELECT * FROM USER WHERE nickname = ?", [nickname]);
-      if (rows.length > 0) return res.status(409).send("이미 가입된 회원입니다");
->>>>>>> Stashed changes
+      if (rows.length > 0) return res.status(409).send({ message : "이미 가입된 회원입니다"});
 
       await db.execute("INSERT INTO USER (id, nickname, password) VALUES (?, ?, ?)", [
         id,
@@ -26,10 +21,10 @@ module.exports = (db) => {
         hashedPassword,
       ]);
 
-      res.status(201).send("회원가입이 완료되었습니다");
+      res.status(201).send({ message : "회원가입이 완료되었습니다"});
     } catch (err) {
       console.error(err);
-      res.status(400).send("잘못된 요청입니다");
+      res.status(400).send({ message : "잘못된 요청입니다"});
     }
   });
 

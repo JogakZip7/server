@@ -45,7 +45,7 @@ module.exports = (db) => {
       });
     } catch (err) {
       console.error("SQL Error:", err);
-      res.status(500).json({ message: "서버 오류가 발생했습니다" });
+      res.status(400).json({ message: "잘못된 요청입니다" });
     }
   });
 
