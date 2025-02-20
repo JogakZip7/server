@@ -21,7 +21,7 @@ module.exports = (db) => {
             );
 
             if(result.length > 0) {
-                return res.status(404).json({ message: "이미 스크랩한 게시글입니다"})
+                return res.status(409).json({ message: "이미 스크랩한 게시글입니다"})
             }
 
             // 스크랩 추가 쿼리
