@@ -67,8 +67,9 @@ module.exports = (db) => {
         page = 1,
         pageSize = 8,
         sortBy = "latest",
+        isPublic = true
       } = req.query;
-      
+
       //게시글 관련 응답에 사용할 변수 선언
       let result;
 
@@ -100,9 +101,10 @@ module.exports = (db) => {
       );
       
       
-      //유저가 그룹 내 사람이 아닌 경우 공개게시글만 리턴
+      //권한이 없는 유저인 경우 공개게시글만 리턴
       if (!participation.length) {
-        
+        if(isPublic == "false") throw { status: 403, message: "열람 권한이 없습니다" };
+
         //공개 게시글 총 페이지 수 및 총 게시글 수 카운트
         const [countPost] = await db.query(`
          SELECT COUNT(*) AS totalCount
@@ -130,39 +132,74 @@ module.exports = (db) => {
       result = resultRow;
 
       } else{ //유저가 그룹 내 사람인 경우 (모든 그룹 게시물 리턴)
-        
-        //모든 게시글 총 페이지 수 및 총 게시글 수 카운트
-        const [countPost] = await db.query(`
-          SELECT COUNT(*) AS totalCount
-          FROM POST
-          WHERE groupId = ?`,
-          [groupId]
-        );
+        //권한이 있는 사람이 공개 게시글을 조회하는 경우
+        if (isPublic != "false"){
+          //공개 게시글 총 페이지 수 및 총 게시글 수 카운트
+          const [countPost] = await db.query(`
+           SELECT COUNT(*) AS totalCount
+           FROM POST
+           WHERE groupId = ? AND isPublic = 1`,
+           [groupId]
+          );
  
-        totalItemCount = countPost[0].totalCount;
-        totalPages = Math.ceil(totalItemCount / pageSize);
-        offset = (page - 1) * (pageSize);
+          totalItemCount = countPost[0].totalCount;
+          totalPages = Math.ceil(totalItemCount / pageSize);
+          offset = (page - 1) * (pageSize);
  
-       //POST 테이블 정렬 후 페이지에 따른 필터링
-       const [resultRow] = await db.query(
-         `
-           SELECT P.*, U.nickname
-           FROM POST P
-           JOIN USER U ON P.userId = U.id
-           WHERE P.groupId = ?
-           ORDER BY ${db.escapeId(sort)} DESC
-           LIMIT ? OFFSET ?
-         `,
-         [groupId, parseInt(pageSize), parseInt(offset)]
-       );
+          //POST 테이블 정렬 후 페이지에 따른 필터링
+          const [resultRow] = await db.query(
+            `
+              SELECT P.*, U.nickname
+              FROM POST P
+              JOIN USER U ON P.userId = U.id
+              WHERE P.groupId = ? AND P.isPublic = 1
+              ORDER BY ${db.escapeId(sort)} DESC
+              LIMIT ? OFFSET ?
+            `,
+            [groupId, parseInt(pageSize), parseInt(offset)]
+          );
 
-       result = resultRow;
+          result = resultRow;
+        } else{
+          //권한이 있는 사람이 비공개 게시글 조회하는 경우
+          //비공개 게시글 총 페이지 수 및 총 게시글 수 카운트
+          const [countPost] = await db.query(`
+            SELECT COUNT(*) AS totalCount
+            FROM POST
+            WHERE groupId = ? AND isPublic = 0`,
+            [groupId]
+          );
+ 
+          totalItemCount = countPost[0].totalCount;
+          totalPages = Math.ceil(totalItemCount / pageSize);
+          offset = (page - 1) * (pageSize);
+ 
+          //POST 테이블 정렬 후 페이지에 따른 필터링
+          const [resultRow] = await db.query(
+           `
+             SELECT P.*, U.nickname
+             FROM POST P
+             JOIN USER U ON P.userId = U.id
+             WHERE P.groupId = ? AND P.isPublic = 0
+             ORDER BY ${db.escapeId(sort)} DESC
+             LIMIT ? OFFSET ?
+           `, [groupId, parseInt(pageSize), parseInt(offset)]
+          );
 
+          result = resultRow;
+
+        }
 
       }
 
-      //response 객체
-      const response = {
+
+      res.status(200).json({
+        id,
+        name,
+        imageUrl,
+        badges: existingBadges,
+        postCount,
+        introduction,
         currentPage: page,
         totalPages: totalPages,
         totalItemCount: totalItemCount,
@@ -178,9 +215,8 @@ module.exports = (db) => {
           commentCount: post.commentCount,
           createdAt: post.createdAt,
         })),
-      };
-
-      res.status(200).json({ id, name, imageUrl, badges: existingBadges, postCount, introduction, response });
+      
+      });
     } catch (err) {
       res.status(err.status || 500).json({ message: err.message || "서버 오류가 발생했습니다" });
     }
