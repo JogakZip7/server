@@ -27,9 +27,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxZTI4NzU2L
 
 //그룹 상세정보 조회
 ###
-GET http://localhost:3000/api/groups/1
+GET http://localhost:3000/groups/1/details
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxZTI4NzU2LWFhNjMtNDczYS1hOGUyLTc3ZTliNGQ4YTI4OSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk5NzU4MjksImV4cCI6MTczOTk5MzgyOX0.mpoIVMM0XGwVrBurWBn0_0cavit2X6vfmJ3T5NGdsks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJjZWE1NDU5LWZmZWQtNDNjYy1iOWMwLTkzMjU4ZDZkYTNhNiIsIm5pY2tuYW1lIjoidGVzdDEiLCJpYXQiOjE3NDAxMzU3NDksImV4cCI6MTc0MDE1Mzc0OX0.ut6hZgd5zXYZjHXRkLX9r_ZPRnnjkbvHEja2_G_g2q8
+
+{
+
+}
+
+#내 그룹 확인
+###
+GET http://localhost:3000/mygroups
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJjZWE1NDU5LWZmZWQtNDNjYy1iOWMwLTkzMjU4ZDZkYTNhNiIsIm5pY2tuYW1lIjoidGVzdDEiLCJpYXQiOjE3NDAxMzQ5MTAsImV4cCI6MTc0MDE1MjkxMH0.gZRs7ae0lbSCP0JJAlkLwN53iXW0HtVvi61IXzL1GGo
 
 {
 
@@ -41,7 +51,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxZTI4NzU2L
 ###
 GET http://localhost:3000/api/groups/1/posts?page=1&pageSize=10&sortBy=mostLiked&keyword=example&isPublic=true&groupId=1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQxZTI4NzU2LWFhNjMtNDczYS1hOGUyLTc3ZTliNGQ4YTI4OSIsIm5pY2tuYW1lIjoiYWJjZGUiLCJpYXQiOjE3Mzk5NzU4MjksImV4cCI6MTczOTk5MzgyOX0.mpoIVMM0XGwVrBurWBn0_0cavit2X6vfmJ3T5NGdsks
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImJjZWE1NDU5LWZmZWQtNDNjYy1iOWMwLTkzMjU4ZDZkYTNhNiIsIm5pY2tuYW1lIjoidGVzdDEiLCJpYXQiOjE3NDAxMzQ5MTAsImV4cCI6MTc0MDE1MjkxMH0.gZRs7ae0lbSCP0JJAlkLwN53iXW0HtVvi61IXzL1GGo
 
 {
 	
@@ -159,11 +169,11 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImVjOWViMGZjL
 
 //abcde 회원가입
 ###
-POST http://localhost:3000/api/signup
+POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-	"nickname":"abcde",
+	"nickname":"test11",
 	"password": "1234"
 }
 
@@ -171,11 +181,11 @@ Content-Type: application/json
 
 ###
 //abcde 로그인
-POST http://localhost:3000/api/signin
+POST https://server-5zu8.onrender.com/signin
 Content-Type: application/json
 
 {
-	"nickname":"abcde",
+	"nickname":"test1",
 	"password": "1234"
 }
 
