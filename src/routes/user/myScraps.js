@@ -18,7 +18,7 @@ module.exports = (db) => {
       const [posts] = await db.query(
         `
         SELECT P.id, U.nickname, P.title, P.imageUrl, P.location, P.moment, P.isPublic, 
-               P.likeCount, P.commentCount
+               P.likeCount, P.commentCount, P.content
         FROM SCRAP S
         JOIN POST P ON S.postId = P.id
         JOIN USER U ON P.userId = U.id
@@ -27,8 +27,6 @@ module.exports = (db) => {
         `,
         [req.user.id, parseInt(pageSize), parseInt(offset)]
       );
-
-
 
       res.status(200).json({
         data: posts.map(post => ({
@@ -41,6 +39,7 @@ module.exports = (db) => {
           isPublic: post.isPublic,
           likeCount: post.likeCount,
           commentCount: post.commentCount,
+          content: post.content
         })),
       });
     } catch (err) {
