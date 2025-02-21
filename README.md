@@ -1,6 +1,7 @@
 # **🔉프로젝트 소개**
 
 코드잇부스트 1기 2반 데모데이의 프로젝트 주제인 **조각집**으로, 사진 공유 방식의 커뮤니티 웹 서비스 입니다.
+
 http://jogakzip7.s3-website-us-east-1.amazonaws.com/
 
 사이트에 접속하여 가입 후 그룹을 생성해 추억을 저장할 게시글을 작성할 수 있습니다.
@@ -8,6 +9,8 @@ http://jogakzip7.s3-website-us-east-1.amazonaws.com/
 원하는 사람끼리 사진과 내용을 공유하거나 많은 사람들에게 추억을 자랑할 수도 있습니다.
 
 그 외에도 댓글, 스크랩, 공감하기 등등 부가적인 기능을 제공합니다.
+
+
 
 
 ### ⭐제시된 요구사항과 차별화된 점
@@ -19,12 +22,15 @@ http://jogakzip7.s3-website-us-east-1.amazonaws.com/
 로그인으로 비밀번호를 받는 절차를 간소화하는 등 사용자가 보다 편하게 사용할 수 있도록 설계하였습니다.
 
 
+
+
 ## 🚩페이지 및 기능 소개
 
 - CRUD 기능
 - 그룹.게시글.댓글 기능
 - 유저 로그인 기능 (유저가 스크랩 한 게시글, 참여 그룹 보기)
   
+
 
 ### 메인
 
@@ -48,11 +54,15 @@ http://jogakzip7.s3-website-us-east-1.amazonaws.com/
 유저가 회원가입 후 로그인 하여 고유 데이터(작성 글, 댓글 등)를 관리할 수 있습니다.
 
 
+
+
 # **👩🏻‍💻** 팀원소개
 
 | 추정은 | 김민하 | 최신원 | 이예진 |
 | --- | --- | --- | --- |
 | @forlyby | @kminnaaa | @Shinwon2001 | @veun00 |
+
+
 
 
 # **🛠** 기술 스택
@@ -87,6 +97,8 @@ http://jogakzip7.s3-website-us-east-1.amazonaws.com/
   <img src="https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=ESLint&logoColor=white">
   <img src="https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=Prettier&logoColor=white">
 </p>
+
+
 
 
 # **📂** 폴더 구조
