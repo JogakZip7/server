@@ -27,7 +27,7 @@ module.exports = (db) => {
         expiresIn: "5h",  //토큰 만료 시간
       });
 
-      res.status(201).send({ message : "회원가입이 완료되었습니다", token });
+      res.status(201).send({ message : "회원가입이 완료되었습니다", nickname, token });
     } catch (err) {
       console.error(err);
       res.status(400).send({ message : "잘못된 요청입니다"});
