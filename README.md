@@ -29,7 +29,7 @@
 
 | 추정은 | 김민하 | 최신원 | 이예진 |
 | --- | --- | --- | --- |
-| @forlyby | @kminaaaa | @Shinwon2001 | @veun00 |
+| @forlyby | @kminnaaa | @Shinwon2001 | @veun00 |
 
 # **🛠** 기술 스택
 
