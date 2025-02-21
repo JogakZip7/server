@@ -29,9 +29,7 @@ module.exports = (db) => {
         expiresIn: "5h",  //토큰 만료 시간
       });
 
-      
-
-      res.status(200).json({ message: "로그인이 완료되었습니다", token });
+      res.status(200).json({ message: "로그인이 완료되었습니다", nickname: user.nickname, token });
     } catch (err) {
       console.error(err);
       res.status(500).send({ message: "로그인에 에러가 발생하였습니다"});
