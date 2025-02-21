@@ -46,6 +46,11 @@ module.exports = (db) => {
         existingBadges.push("게시글 공감 20개 이상 받기");
         updated = true;
       }
+      // 게시글 20개 등록
+      if (postCount >= 20 && !existingBadges.includes("게시글 20개 등록")) {
+        existingBadges.push("게시글 20개 등록");
+        updated = true;
+      }
  
       if (updated) {
         await db.execute("UPDATE `GROUP` SET badges = ? WHERE id = ?", [JSON.stringify(existingBadges), groupId]);
