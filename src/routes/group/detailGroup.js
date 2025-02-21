@@ -156,8 +156,14 @@ module.exports = (db) => {
 
       }
 
-      //response 객체
-      const response = {
+
+      res.status(200).json({
+        id,
+        name,
+        imageUrl,
+        badges: existingBadges,
+        postCount,
+        introduction,
         currentPage: page,
         totalPages: totalPages,
         totalItemCount: totalItemCount,
@@ -173,9 +179,8 @@ module.exports = (db) => {
           commentCount: post.commentCount,
           createdAt: post.createdAt,
         })),
-      };
-
-      res.status(200).json({ id, name, imageUrl, badges: existingBadges, postCount, introduction, response });
+      
+      });
     } catch (err) {
       res.status(err.status || 500).json({ message: err.message || "서버 오류가 발생했습니다" });
     }
