@@ -10,8 +10,8 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(cors({
-  origin: ["http://jogakzip7.s3-website-us-east-1.amazonaws.com", "http://localhost:3000"], // S3 URL 허용
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: ["http://jogakzip7.s3-website-us-east-1.amazonaws.com", "http://localhost:5173"], // S3 URL 허용
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
 }));
 
