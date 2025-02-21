@@ -66,6 +66,40 @@
 
 →위에 README 작성 꿀팁처럼 **file-tree-generator**  설치한 다음 넣기
 
-📦middleware
+```
+📦middleware 
  ┗ 📜auth.js
-
+📦src
+ ┣ 📂routes
+ ┃ ┣ 📂comment
+ ┃ ┃ ┣ 📜createComment.js
+ ┃ ┃ ┣ 📜deleteComment.js
+ ┃ ┃ ┣ 📜readComment.js
+ ┃ ┃ ┗ 📜updateComment.js
+ ┃ ┣ 📂group
+ ┃ ┃ ┣ 📜createGroup.js
+ ┃ ┃ ┣ 📜deleteGroup.js
+ ┃ ┃ ┣ 📜detailGroup.js
+ ┃ ┃ ┣ 📜joinGroup.js
+ ┃ ┃ ┣ 📜leaveGroup.js
+ ┃ ┃ ┣ 📜readGroup.js
+ ┃ ┃ ┗ 📜updateGroup.js
+ ┃ ┣ 📂image
+ ┃ ┃ ┗ 📜uploadImage.js
+ ┃ ┣ 📂post
+ ┃ ┃ ┣ 📜createPost.js
+ ┃ ┃ ┣ 📜deletePost.js
+ ┃ ┃ ┣ 📜detailPost.js
+ ┃ ┃ ┣ 📜likePost.js
+ ┃ ┃ ┣ 📜readPost.js
+ ┃ ┃ ┣ 📜scrapPost.js
+ ┃ ┃ ┗ 📜updatePost.js
+ ┃ ┗ 📂user
+ ┃ ┃ ┣ 📜deleteUser.js
+ ┃ ┃ ┣ 📜myGroups.js
+ ┃ ┃ ┣ 📜myScraps.js
+ ┃ ┃ ┣ 📜signIn.js
+ ┃ ┃ ┣ 📜signOut.js
+ ┃ ┃ ┗ 📜signUp.js
+ ┗ 📜index.js
+```
